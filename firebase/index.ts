@@ -2,9 +2,7 @@ import { doc, updateDoc } from "firebase/firestore"
 import { firestore } from "./config"
 import * as xlsx from "xlsx"
 
-const returnDocRef = (document: string) => {
-  return doc(firestore, "cse", document)
-}
+const docRef = doc(firestore, "cse", "pit")
 
 export const uploadExcelSheet = (file: File | null) => {
   if (!file) {
