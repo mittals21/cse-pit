@@ -1,5 +1,6 @@
 import { getData } from "@/firebase"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { toast } from "react-toastify"
 
 // Get All Data
 export const getAllData = createAsyncThunk(
@@ -16,13 +17,11 @@ export const getAllData = createAsyncThunk(
 
 const initialState: {
   status: string
-  loading: boolean
   data: any
   error: any
 } = {
   data: [],
   status: "",
-  loading: false,
   error: null,
 }
 const data = createSlice({
@@ -33,17 +32,14 @@ const data = createSlice({
     // Get All Data
     builder.addCase(getAllData.pending, (state) => {
       state.status = "getting_data"
-      state.loading = true
     })
     builder.addCase(getAllData.fulfilled, (state, action) => {
       state.data = action.payload
       state.status = "success_getting_data"
-      state.loading = false
     })
     builder.addCase(getAllData.rejected, (state, action) => {
-      // toast.error("Error Fetching Circulars")
+      toast.error("Error Fetching Data")
       state.error = action.payload
-      state.loading = false
       state.status = "Failed"
     })
   },

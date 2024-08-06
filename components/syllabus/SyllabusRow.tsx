@@ -10,6 +10,16 @@ const SyllabusRow = ({
 }) => {
   const router = useRouter()
 
+  const getDateString = (timestamp: string) => {
+    const date = new Date(timestamp)
+
+    const day = date.getUTCDate()
+    const month = date.getUTCMonth() + 1
+    const year = date.getUTCFullYear()
+
+    return `${day}/${month}/${year}`
+  }
+
   return (
     <div>
       <div
@@ -25,15 +35,15 @@ const SyllabusRow = ({
       {filteredData && filteredData?.length > 0 ? (
         filteredData?.map((e, index) => (
           <div
-            key={e?._id}
+            key={e?.id}
             className="grid text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2"
             style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
-            onClick={() => router.push(`/${e?.file?.cloudinary_id}`)}
+            onClick={() => router.push(`/syllabus/${e?.id}`)}
           >
             <p>{index + 1}</p>
             <p>{e?.subject}</p>
-            <p>{e?.createdAt?.split("T")[0]}</p>
-            <p>{e?.updatedAt?.split("T")[0]}</p>
+            <p>{getDateString(e?.createdAt)}</p>
+            <p>{getDateString(e?.updatedAt)}</p>
             <p className="flex justify-center">
               <CiMenuKebab />
             </p>

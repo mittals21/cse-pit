@@ -1,61 +1,38 @@
 "use client"
 import SyllabusRow from "@/components/syllabus/SyllabusRow"
+import { MySelector } from "@/redux/store"
 import { SyllabusData } from "@/utils/type"
-import React, { EventHandler, useEffect, useState } from "react"
-
-const data: Array<SyllabusData> = [
-  {
-    file: {
-      avatar:
-        "https://res.cloudinary.com/dkdxeiuxr/image/upload/v1721973206/syllabus/tvcgstzn15fm4qu9iwce.png",
-      cloudinary_id: "syllabus/tvcgstzn15fm4qu9iwce",
-    },
-    _id: "66a339d65998c4467429a3ed",
-    semester: 1,
-    department: "core",
-    subject: "COMA",
-    createdAt: "2024-07-26T05:53:26.824Z",
-    updatedAt: "2024-07-26T05:53:26.824Z",
-    __v: 0,
-  },
-  {
-    file: {
-      avatar:
-        "https://res.cloudinary.com/dkdxeiuxr/image/upload/v1721973233/syllabus/sfr7eem8fyh3oa7ksxla.png",
-      cloudinary_id: "syllabus/sfr7eem8fyh3oa7ksxla",
-    },
-    _id: "66a339f25998c4467429a3f0",
-    semester: 6,
-    department: "ai",
-    subject: "NLP",
-    createdAt: "2024-07-26T05:53:54.059Z",
-    updatedAt: "2024-07-26T05:53:54.059Z",
-    __v: 0,
-  },
-]
+import React, { useEffect, useState } from "react"
 
 const Syllabus = () => {
   const [dept, setDept] = useState("")
   const [semester, setSemester] = useState<string>("")
   const [pageData, setPageData] = useState<Array<SyllabusData> | null>(null)
-  const [filteredData, setFilteredData] = useState<Array<SyllabusData> | null>(null)
-  // const { data } = useSelector((state) => state?.syllabus)
+  const [filteredData, setFilteredData] = useState<Array<SyllabusData> | null>(
+    null
+  )
+  const { data } = MySelector((state) => state?.data)
 
   useEffect(() => {
     const pageDataSetter = () => {
       if (!data) return
-      setPageData(data)
+      setPageData(data?.syllabus)
     }
     pageDataSetter()
-  }, [])
+  }, [data])
 
   useEffect(() => {
     const changeData = () => {
       if (!dept || !semester || !pageData) return
       if (dept === "default" || semester === "default") setFilteredData(null)
+
+      console.log(pageData, dept, semester)
+
       const filtered = pageData.filter(
-        (i) => i?.department === dept && i?.semester === Number(semester)
+        (i) => i?.department === dept && i?.semester === semester
       )
+      console.log(filtered, "filtered")
+
       setFilteredData(filtered)
     }
     changeData()

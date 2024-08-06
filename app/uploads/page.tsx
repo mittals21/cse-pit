@@ -1,11 +1,13 @@
 "use client"
+import Loader from "@/components/loader/Loader"
 import UploadStudentSheet from "@/components/uploads/UploadStudentSheet"
 import { allUploads } from "@/firebase"
 import { getAllData } from "@/redux/dataSlice"
 import { MyDispatch, MySelector } from "@/redux/store"
 import React, { ChangeEvent, useEffect, useRef, useState } from "react"
 import { IoMdCloudUpload } from "react-icons/io"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { toast } from "react-toastify"
 
 const AllUploads = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -15,6 +17,7 @@ const AllUploads = () => {
   const [uploadType, setUploadType] = useState<string>("")
   const [department, setDepartment] = useState<string>("")
   const [semester, setSemester] = useState<string>("")
+  const [apiCall, setApiCall] = useState<boolean>(false)
   const { data } = MySelector((state) => state.data)
 
   // For opening file manager
@@ -37,12 +40,11 @@ const AllUploads = () => {
     if (e.target.value === "circular") {
       setDepartment("")
     }
-    // console.log(`Upload type selected: ${e.target.value}`)
   }
 
   // For uploading data
   const upload = async () => {
-    setFile(null)
+    setApiCall(true)
     const newData =
       uploadType === "circular"
         ? { file, name, for: semester }
@@ -52,11 +54,15 @@ const AllUploads = () => {
 
     const res = await allUploads(uploadType, newData, data)
 
-    if(res === "Done") dispatch(getAllData())
-    // await allUploads(uploadType, data)
+    if (res === "Done") {
+      dispatch(getAllData())
+      toast.success("File uploaded successfully")
+    }
     // setUploadType("")
     // setDepartment("")
     // setSemester("")
+    setApiCall(false)
+    setFile(null)
     setName("")
   }
 
@@ -86,23 +92,17 @@ const AllUploads = () => {
             {uploadType === "syllabus" && (
               <div>
                 <select
-                  onChange={(e) => {
-                    setDepartment(e.target.value)
-                    console.log(`Department selected: ${e.target.value}`)
-                  }}
+                  onChange={(e) => setDepartment(e.target.value)}
                   value={department}
                   className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                 >
                   <option value="">---Select Department---</option>
-                  <option value="CSE">CSE</option>
-                  <option value="AI">AI</option>
+                  <option value="core">CSE</option>
+                  <option value="ai">AI</option>
                 </select>
                 {department && (
                   <select
-                    onChange={(e) => {
-                      setSemester(e.target.value)
-                      console.log(`Semester selected: ${e.target.value}`)
-                    }}
+                    onChange={(e) => setSemester(e.target.value)}
                     value={semester}
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
@@ -122,12 +122,7 @@ const AllUploads = () => {
             <div>
               {uploadType === "circular" && (
                 <select
-                  onChange={(e) => {
-                    setSemester(e.target.value)
-                    console.log(
-                      `Semester selected for circular: ${e.target.value}`
-                    )
-                  }}
+                  onChange={(e) => setSemester(e.target.value)}
                   value={semester}
                   className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                 >
@@ -171,10 +166,7 @@ const AllUploads = () => {
             type="text"
             placeholder="File Name"
             value={name}
-            onChange={(e) => {
-              setName(e.target.value)
-              console.log(`File name: ${e.target.value}`)
-            }}
+            onChange={(e) => setName(e.target.value)}
             className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
           />
         </div>
@@ -198,7 +190,7 @@ const AllUploads = () => {
               !semester
             }
           >
-            Upload
+            {apiCall ? <Loader /> : "Upload"}
           </button>
         </div>
       </div>

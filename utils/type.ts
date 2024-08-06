@@ -15,20 +15,26 @@ export type ExamFilterData = {
 }
 
 export type SyllabusData = {
-  file: {
-    avatar: string
-    cloudinary_id: string
-  }
-  _id: string
-  semester: number
+  file: string
+  id: string
+  semester: string
   department: string
   subject: string
   createdAt: string
   updatedAt: string
-  __v: number
+}
+
+export type CircularData = {
+  file: string
+  id: string
+  for: string
+  name: string
+  createdAt: string
+  updatedAt: string
 }
 
 export type StudentData = {
+  id: string
   name: string
   enrollment: number
   contact: number
@@ -54,7 +60,7 @@ export type StudentData = {
 }
 
 export type CircularUpload = {
-  file: File |null
+  file: File | null
   name: string
   for: string
 }
@@ -62,7 +68,7 @@ export type SyllabusUpload = {
   file: File | null
   subject: string
   semester: string
-  department:string
+  department: string
 }
 
 export type AllUploads = CircularUpload | SyllabusUpload

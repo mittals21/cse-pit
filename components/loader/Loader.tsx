@@ -4,8 +4,8 @@ import Image from "next/image"
 
 const Loader = () => {
   return (
-    <div>
-      <Image layout="fill" src={LOADER} alt="loader" />
+    <div className="px-[15px]">
+      <Image width={25} height={25} src={LOADER} alt="loader" />
     </div>
   )
 }

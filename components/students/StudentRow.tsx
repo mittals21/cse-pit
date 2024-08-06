@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-
+import React, { Dispatch, useEffect, useState } from "react"
 import { LiaRupeeSignSolid } from "react-icons/lia"
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md"
 import { MdOutlineCheckBox } from "react-icons/md"
@@ -12,23 +11,23 @@ const StudentRow = ({
   sendEmailTo,
   emailIsSent,
   setEmailIsSent,
-}:{
-  e:any,
-  i:any,
-  feeType:any,
-  setSendEmailTo:any,
-  sendEmailTo:any,
-  emailIsSent:any,
-  setEmailIsSent:any,
+}: {
+  e: any
+  i: number
+  feeType: any
+  setSendEmailTo: Dispatch<any>
+  sendEmailTo: any
+  emailIsSent: boolean
+  setEmailIsSent: Dispatch<boolean>
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [isSelected, setIsSelected] = useState(false)
 
   useEffect(() => {
     if (isSelected) {
-      setSendEmailTo((prev:any) => [...prev, e])
+      setSendEmailTo((prev: any) => [...prev, e])
     } else {
-      const newData = Array.from(sendEmailTo).filter((d:any) => d._id !== e._id)
+      const newData = Array.from(sendEmailTo).filter((d: any) => d.id !== e.id)
       setSendEmailTo(newData)
     }
   }, [isSelected])

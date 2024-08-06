@@ -1,12 +1,11 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/navbar/Navbar"
 import MobileNav from "@/components/navbar/MobileNav"
 import Footer from "@/components/footer/Footer"
 import { ReduxProvider } from "@/redux/provider"
-
-const inter = Inter({ subsets: ["latin"] })
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 export const metadata: Metadata = {
   title: "DEPT. CSE PIT",
@@ -20,10 +19,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         <ReduxProvider>
+          <ToastContainer
+            theme="colored"
+            newestOnTop
+            draggable={false}
+            toastStyle={{ background: "#00a384", color: "black" }}
+          />
           <Navbar />
           <MobileNav />
+
           {children}
           <Footer />
         </ReduxProvider>

@@ -1,32 +1,58 @@
-import React from "react"
-// import { useSelector } from "react-redux"
-// import { useNavigate } from "react-router-dom"
+"use client"
+
+import { MySelector } from "@/redux/store"
+import { CircularData } from "@/utils/type"
+import { useRouter } from "next/navigation"
+import React, { useEffect, useState } from "react"
 
 const Circulars = () => {
-  // const navigate = useNavigate()
-  // const { data } = useSelector((state) => state?.circulars)
-  const data:any = []
+  const router = useRouter()
+  const [pageData, setPageData] = useState<Array<CircularData> | null>(null)
+  const { data } = MySelector((state) => state?.data)
+
+  const getDateString = (timestamp: string) => {
+    const date = new Date(timestamp)
+
+    const day = date.getUTCDate()
+    const month = date.getUTCMonth() + 1
+    const year = date.getUTCFullYear()
+
+    return `${day}/${month}/${year}`
+  }
+
+  useEffect(() => {
+    const pageDataSetter = () => {
+      if (!data) return
+      setPageData(data?.circular)
+    }
+    pageDataSetter()
+  }, [data])
+
   return (
     <div className="flex flex-col justify-center items-center gap-3 tracking-wide">
       <p className="text-center text-[25px] lg:text-[35px] font-bold">
         Circulars
       </p>
       <div className="border-2 border-my-green max-h-[300px] overflow-y-scroll bg-white/85 px-2 lg:px-5">
-        {data && data?.length > 0 ? (
-          data
-            ?.map((e:any) => (
+        {pageData && pageData?.length > 0 ? (
+          pageData
+            ?.map((e: any) => (
               <div
-                key={e?._id}
+                key={e?.id}
                 className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] gap-10"
               >
                 <p
                   className="hover:underline text-lg lg:text-2xl cursor-pointer"
-                  // onClick={() => navigate(`/${e?.file?.cloudinary_id}`)}
+                  onClick={() => router.push(`circular/${e?.id}`)}
                 >
-                  {e?.name}
+                  {e?.name}{" "}
+                  <span className="ml-2 text-gray-600 text-base">
+                    ({e?.for === "all" ? "All Semesters" : `Semester ${e?.for}`}
+                    )
+                  </span>
                 </p>
                 <p className="text-sm lg:text-base text-gray-500">
-                  {e?.createdAt?.split("T")[0]}
+                  {getDateString(e?.createdAt)}
                 </p>
               </div>
             ))

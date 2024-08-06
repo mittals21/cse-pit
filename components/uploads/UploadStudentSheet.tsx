@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from "react"
-// import { useDispatch, useSelector } from "react-redux"
-// import { getStudentsData, uploadExcelSheet } from "../../redux/StudentSlice"
+import React, { useRef, useState } from "react"
 import { IoMdCloudUpload } from "react-icons/io"
-import Loader from "../loader/Loader"
 import { uploadExcelSheet } from "@/firebase"
+import { toast } from "react-toastify"
+import { getAllData } from "@/redux/dataSlice"
+import { useDispatch } from "react-redux"
+import { MyDispatch } from "@/redux/store"
 
 const UploadStudentSheet = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch<MyDispatch>()
   const [excelFile, setExcelFile] = useState<File | null>(null)
-
-  // const { loading, status } = useSelector((state) => state?.students)
 
   const handleFileUpload = (files: FileList | null) => {
     if (files?.length === 0) return
@@ -22,19 +21,12 @@ const UploadStudentSheet = () => {
     inputRef.current && inputRef.current.click()
   }
 
-  const upload = async () => {
-    // dispatch(uploadExcelSheet(excelFile))
-    await uploadExcelSheet(excelFile)
+  const upload = () => {
+    uploadExcelSheet(excelFile)
     setExcelFile(null)
+    dispatch(getAllData())
+    toast.success("File uploaded successfully")
   }
-
-  // useEffect(() => {
-  //   const refetchStudents = () => {
-  //     if (status !== "success_uploading_sheet") return
-  //     dispatch(getStudentsData())
-  //   }
-  //   refetchStudents()
-  // }, [status])
 
   return (
     <div className="flex-1">
@@ -67,7 +59,6 @@ const UploadStudentSheet = () => {
           } rounded-lg px-[20px] py-[8px] flex justify-center`}
           disabled={excelFile === null}
         >
-          {/* {status === "uploading_sheet" && loading ? <Loader /> : "Upload"} */}
           Upload
         </button>
       </div>

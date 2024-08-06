@@ -1,22 +1,20 @@
 "use client"
 import React, { useEffect, useRef, useState } from "react"
-// import { useDispatch, useSelector } from "react-redux"
-// import { sendEmailStudents } from "../redux/StudentSlice"
 import { MdOutlineArrowDropDown } from "react-icons/md"
 import Loader from "@/components/loader/Loader"
 import StudentRow from "@/components/students/StudentRow"
+import { MySelector } from "@/redux/store"
+import { StudentData } from "@/utils/type"
 
 const StudentTable = () => {
-  // const dispatch = useDispatch()
   const tableRef = useRef<HTMLDivElement>(null)
-  // const { data } = useSelector((state) => state?.students)
+  const { data } = MySelector((state) => state?.data)
   const [feeType, setFeeType] = useState<string>("tuition")
   const [sendEmailTo, setSendEmailTo] = useState<any>([])
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
   const [emailIsSent, setEmailIsSent] = useState<boolean>(false)
-  const data:any = []
-
-  // const { loading, status } = useSelector((state) => state?.students)
+  const [pageData, setPageData] = useState<Array<StudentData> | null>(null)
+  const [apiCall, setApiCall] = useState<boolean>(false)
 
   const DropDown = () => (
     <div className="hidden absolute right-16 top-8 p-2 border border-my-green rounded-md lg:flex flex-col gap-[5px] text-xl bg-white shadow-2xl shadow-black">
@@ -59,7 +57,23 @@ const StudentTable = () => {
     }
   }
 
-  
+  const sendEmail = async () => {
+    setApiCall(true)
+    // dispatch(
+    //   sendEmailStudents({ type: feeType, students: sendEmailTo })
+    // )
+    setSendEmailTo([])
+    setEmailIsSent(true)
+    setApiCall(false)
+  }
+
+  useEffect(() => {
+    const pageDataSetter = () => {
+      if (!data) return
+      setPageData(data?.students)
+    }
+    pageDataSetter()
+  }, [data])
 
   useEffect(() => {
     updateMaxHeightNotif()
@@ -119,13 +133,13 @@ const StudentTable = () => {
 
       <div className="py-2">
         <div className="mb-[4px]">
-          {data && data?.length > 0 ? (
-            data?.map((e:any, i:any) => (
+          {pageData && pageData?.length > 0 ? (
+            pageData?.map((e: StudentData, i: number) => (
               <StudentRow
                 e={e}
                 i={i}
                 feeType={feeType}
-                key={e?._id}
+                key={i}
                 setSendEmailTo={setSendEmailTo}
                 sendEmailTo={sendEmailTo}
                 emailIsSent={emailIsSent}
@@ -141,20 +155,10 @@ const StudentTable = () => {
         {sendEmailTo?.length > 0 && (
           <div className="flex sticky bottom-0 justify-end mr-3">
             <button
-              onClick={() => {
-                // dispatch(
-                //   sendEmailStudents({ type: feeType, students: sendEmailTo })
-                // )
-                setSendEmailTo([])
-                setEmailIsSent(true)
-              }}
+              onClick={sendEmail}
               className={`bg-my-green cursor-pointer text-white text-xl rounded-lg px-[30px] py-[12px] flex justify-center `}
             >
-              {/* {status === "sending_email" && loading ? (
-                <Loader />
-              ) : (
-                `Send Email [${sendEmailTo.length}]`
-              )} */}
+              {apiCall ? <Loader /> : `Send Email [${sendEmailTo.length}]`}
             </button>
           </div>
         )}

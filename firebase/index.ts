@@ -1,16 +1,30 @@
-import {
-  collection,
-  doc,
-  getDoc,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore"
+import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { firestore, storage } from "./config"
 import * as xlsx from "xlsx"
+import { v4 as uuidv4 } from "uuid"
 import { AllUploads } from "@/utils/type"
+import * as nodemailer from "nodemailer"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 const docRef = doc(firestore, "cse", "pit")
+
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: "your-email@gmail.com",
+//     pass: "your-email-password",
+//   },
+// })
+
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.forwardemail.net",
+//   port: 465,
+//   secure: true,
+//   auth: {
+//     user: "my_user",
+//     pass: "my_password",
+//   },
+// })
 
 export const uploadExcelSheet = (file: File | null) => {
   if (!file) {
@@ -33,9 +47,8 @@ export const uploadExcelSheet = (file: File | null) => {
         data = [...temp]
       }
 
-      // console.log("Processed Data:", data)
-
       const students = data?.map((d) => ({
+        id: uuidv4(),
         name: d?.Name,
         enrollment: d["Enrollment Number"],
         contact: d?.Contact,
@@ -59,8 +72,6 @@ export const uploadExcelSheet = (file: File | null) => {
           },
         },
       }))
-
-      // console.log(studentData)
 
       await updateDoc(docRef, { students })
       return "Done"
@@ -92,15 +103,32 @@ export const allUploads = async (
 ) => {
   try {
     if (!data || !data.file) return "No Data Found"
-    const storageRef = ref(storage, type)
+    const storageRef = ref(storage, `${type}/${Date?.now()}-${data.file.name}`)
 
     const upload = await uploadBytes(storageRef, data.file)
     const fileUrl = await getDownloadURL(upload.ref)
 
     await updateDoc(docRef, {
       [type]: oldData[type]
-        ? [...oldData[type], { ...data, file: fileUrl }]
-        : [{ ...data, file: fileUrl }],
+        ? [
+            ...oldData[type],
+            {
+              ...data,
+              file: fileUrl,
+              createdAt: Date.now(),
+              updatedAt: Date.now(),
+              id: uuidv4(),
+            },
+          ]
+        : [
+            {
+              ...data,
+              file: fileUrl,
+              createdAt: Date.now(),
+              updatedAt: Date.now(),
+              id: uuidv4(),
+            },
+          ],
     })
 
     return "Done"
@@ -109,4 +137,16 @@ export const allUploads = async (
   }
 }
 
-
+export const sendEmail = async () => {
+  try {
+    // const mailOptions = {
+    //   from: "your-email@gmail.com",
+    //   to,
+    //   subject,
+    //   html,
+    // }
+    // await transporter.sendMail(mailOptions)
+  } catch (error) {
+    console.error(error)
+  }
+}
