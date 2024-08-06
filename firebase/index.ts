@@ -3,28 +3,9 @@ import { firestore, storage } from "./config"
 import * as xlsx from "xlsx"
 import { v4 as uuidv4 } from "uuid"
 import { AllUploads } from "@/utils/type"
-import * as nodemailer from "nodemailer"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 const docRef = doc(firestore, "cse", "pit")
-
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     user: "your-email@gmail.com",
-//     pass: "your-email-password",
-//   },
-// })
-
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.forwardemail.net",
-//   port: 465,
-//   secure: true,
-//   auth: {
-//     user: "my_user",
-//     pass: "my_password",
-//   },
-// })
 
 export const uploadExcelSheet = (file: File | null) => {
   if (!file) {
@@ -134,19 +115,5 @@ export const allUploads = async (
     return "Done"
   } catch (error) {
     console.log(error)
-  }
-}
-
-export const sendEmail = async () => {
-  try {
-    // const mailOptions = {
-    //   from: "your-email@gmail.com",
-    //   to,
-    //   subject,
-    //   html,
-    // }
-    // await transporter.sendMail(mailOptions)
-  } catch (error) {
-    console.error(error)
   }
 }

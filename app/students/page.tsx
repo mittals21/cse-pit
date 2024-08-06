@@ -5,12 +5,13 @@ import Loader from "@/components/loader/Loader"
 import StudentRow from "@/components/students/StudentRow"
 import { MySelector } from "@/redux/store"
 import { StudentData } from "@/utils/type"
+import { toast } from "react-toastify"
 
 const StudentTable = () => {
   const tableRef = useRef<HTMLDivElement>(null)
   const { data } = MySelector((state) => state?.data)
   const [feeType, setFeeType] = useState<string>("tuition")
-  const [sendEmailTo, setSendEmailTo] = useState<any>([])
+  const [sendEmailTo, setSendEmailTo] = useState<Array<StudentData>>([])
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
   const [emailIsSent, setEmailIsSent] = useState<boolean>(false)
   const [pageData, setPageData] = useState<Array<StudentData> | null>(null)
@@ -59,12 +60,26 @@ const StudentTable = () => {
 
   const sendEmail = async () => {
     setApiCall(true)
-    // dispatch(
-    //   sendEmailStudents({ type: feeType, students: sendEmailTo })
-    // )
+
+    const response = await fetch("/api/nodemail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        feesType: feeType,
+        students: sendEmailTo,
+      }),
+    })
+
     setSendEmailTo([])
     setEmailIsSent(true)
     setApiCall(false)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+    const data = await response.json()
+    toast.success(data?.message)
   }
 
   useEffect(() => {

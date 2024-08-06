@@ -25,14 +25,9 @@ const Syllabus = () => {
     const changeData = () => {
       if (!dept || !semester || !pageData) return
       if (dept === "default" || semester === "default") setFilteredData(null)
-
-      console.log(pageData, dept, semester)
-
       const filtered = pageData.filter(
         (i) => i?.department === dept && i?.semester === semester
       )
-      console.log(filtered, "filtered")
-
       setFilteredData(filtered)
     }
     changeData()
