@@ -1,10 +1,14 @@
 "use client"
+import { getAllData } from "@/redux/dataSlice"
+import { MyDispatch } from "@/redux/store"
 import { NavbarRoutes } from "@/utils/type"
 import { usePathname, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 
 const Navbar = () => {
   const router = useRouter()
+  const dispatch = useDispatch<MyDispatch>()
   const location = usePathname()
   const [active, setActive] = useState<string>("Home")
 
@@ -24,6 +28,10 @@ const Navbar = () => {
     { title: "Upload", path: "/uploads" },
     { title: "Students", path: "/students" },
   ]
+
+  useEffect(() => {
+    dispatch(getAllData())
+  }, [])
 
   useEffect(() => {
     setActive(data?.find((d) => d?.path === location)?.title || "Home")

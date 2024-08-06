@@ -1,12 +1,17 @@
 "use client"
+import { getAllData } from "@/redux/dataSlice"
+import { MyDispatch } from "@/redux/store"
 import { NavbarRoutes } from "@/utils/type"
 import { usePathname, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { FiMenu } from "react-icons/fi"
 import { IoClose } from "react-icons/io5"
+import { useDispatch } from "react-redux"
 
 const MobileNav = () => {
   const router = useRouter()
+  const dispatch = useDispatch<MyDispatch>()
+
   const location = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [active, setActive] = useState<string>("Home")
@@ -28,6 +33,10 @@ const MobileNav = () => {
     // { title: "Upload", path: "/uploads" },
     // { title: "Students", path: "/students" },
   ]
+
+  useEffect(()=>{
+    dispatch(getAllData())
+  },[])
 
   useEffect(() => {
     setActive(data?.find((d) => d?.path === location)?.title || "")

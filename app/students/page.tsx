@@ -59,6 +59,8 @@ const StudentTable = () => {
     }
   }
 
+  
+
   useEffect(() => {
     updateMaxHeightNotif()
     window.addEventListener("resize", updateMaxHeightNotif)

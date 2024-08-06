@@ -1,46 +1,35 @@
 "use client"
-
 import UploadStudentSheet from "@/components/uploads/UploadStudentSheet"
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
+import { allUploads } from "@/firebase"
+import { getAllData } from "@/redux/dataSlice"
+import { MyDispatch, MySelector } from "@/redux/store"
+import React, { ChangeEvent, useEffect, useRef, useState } from "react"
 import { IoMdCloudUpload } from "react-icons/io"
+import { useDispatch, useSelector } from "react-redux"
 
 const AllUploads = () => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const dispatch = useDispatch<MyDispatch>()
   const [file, setFile] = useState<File | null>(null)
   const [name, setName] = useState<string>("")
   const [uploadType, setUploadType] = useState<string>("")
   const [department, setDepartment] = useState<string>("")
   const [semester, setSemester] = useState<string>("")
+  const { data } = MySelector((state) => state.data)
 
-  useEffect(() => {
-    if (uploadType === "circular") {
-      setDepartment("")
-    }
-    console.log({
-      file: file?.name || "",
-      name,
-      uploadType,
-      department: department || "N/A",
-      semester: semester || "N/A",
-    })
-  }, [file, name, uploadType, department, semester])
-
+  // For opening file manager
   const handleInput = () => {
     if (!inputRef) return
     inputRef.current && inputRef.current.click()
   }
 
+  // For saving the selected file
   const handleFileUpload = (files: FileList | null) => {
     if (files?.length === 0) return
     setFile(files && files[0])
   }
 
+  // For resetting the data on type change
   const handleUploadTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setUploadType(e.target.value)
     setFile(null)
@@ -48,16 +37,35 @@ const AllUploads = () => {
     if (e.target.value === "circular") {
       setDepartment("")
     }
-    console.log(`Upload type selected: ${e.target.value}`)
+    // console.log(`Upload type selected: ${e.target.value}`)
   }
 
-  const upload = () => {
+  // For uploading data
+  const upload = async () => {
     setFile(null)
+    const newData =
+      uploadType === "circular"
+        ? { file, name, for: semester }
+        : uploadType === "syllabus"
+        ? { file, subject: name, semester, department }
+        : null
+
+    const res = await allUploads(uploadType, newData, data)
+
+    if(res === "Done") dispatch(getAllData())
+    // await allUploads(uploadType, data)
     // setUploadType("")
     // setDepartment("")
     // setSemester("")
     setName("")
   }
+
+  // For clearing the department value if circular is selected
+  useEffect(() => {
+    if (uploadType === "circular") {
+      setDepartment("")
+    }
+  }, [uploadType])
 
   return (
     <div className="px-60 my-[100px] ">

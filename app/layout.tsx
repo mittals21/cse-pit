@@ -4,6 +4,7 @@ import "./globals.css"
 import Navbar from "@/components/navbar/Navbar"
 import MobileNav from "@/components/navbar/MobileNav"
 import Footer from "@/components/footer/Footer"
+import { ReduxProvider } from "@/redux/provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,11 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <MobileNav />
-
-        {children}
-        <Footer />
+        <ReduxProvider>
+          <Navbar />
+          <MobileNav />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   )
