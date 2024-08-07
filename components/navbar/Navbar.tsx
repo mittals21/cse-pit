@@ -84,7 +84,7 @@ const Navbar = () => {
           </div>
         </div>
       ) : (
-        <div className="h-screen fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center scale-[3]">
+        <div className="h-screen fixed top-0 left-0 z-[505050] bg-white right-0 bottom-0 flex items-center justify-center scale-[3]">
           <Loader />
         </div>
       )}
