@@ -79,8 +79,9 @@ const AllUploads = () => {
 
   useEffect(() => {
     const changePage = () => {
-      if (!host) return
-      if (host !== "admin") window.location.href = "/"
+      if (!host || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
+      if (host !== process.env.NEXT_PUBLIC_ADMIN_ROUTE)
+        window.location.href = "/"
     }
     changePage()
   }, [host])
