@@ -14,8 +14,7 @@ const Navbar = () => {
   const dispatch = useDispatch<MyDispatch>()
   const location = usePathname()
   const [active, setActive] = useState<string>("Home")
-
-  const data: Array<NavbarRoutes> = [
+  const [data, setData] = useState<Array<NavbarRoutes>>([
     { title: "Home", path: "/" },
     { title: "CSE Dept.", path: "/department" },
     { title: "Syllabus", path: "/syllabus" },
@@ -23,16 +22,17 @@ const Navbar = () => {
     { title: "Events", path: "/events" },
     { title: "Help", path: "/help" },
     { title: "Contact Us", path: "/contact" },
-  ]
+  ])
 
   useEffect(() => {
     dispatch(getAllData())
     const host = hostname()
     if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
-      data.push(
+      setData((prev) => [
+        ...prev,
         { title: "Upload", path: "/uploads" },
-        { title: "Students", path: "/students" }
-      )
+        { title: "Students", path: "/students" },
+      ])
     }
     dispatch(setHostName(host))
   }, [])
