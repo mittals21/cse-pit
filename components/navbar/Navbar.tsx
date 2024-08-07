@@ -21,8 +21,8 @@ const Navbar = () => {
     { title: "Events", path: "/events" },
     { title: "Help", path: "/help" },
     { title: "Contact Us", path: "/contact" },
-    // { title: "Upload", path: "/uploads" },
-    // { title: "Students", path: "/students" },
+    { title: "Upload", path: "/uploads" },
+    { title: "Students", path: "/students" },
   ]
 
   useEffect(() => {
