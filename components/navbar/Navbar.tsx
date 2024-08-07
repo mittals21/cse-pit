@@ -30,21 +30,6 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
-    const changePage = async () => {
-      if (!process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
-      if (hostname() === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
-        console.log("is working?")
-        setData((prev) => [
-          ...prev,
-          { title: "Upload", path: "/uploads" },
-          { title: "Students", path: "/students" },
-        ])
-      }
-    }
-    changePage()
-  }, [])
-
-  useEffect(() => {
     setActive(data?.find((d) => d?.path === location)?.title || "Home")
   }, [location])
 
