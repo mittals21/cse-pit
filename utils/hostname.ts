@@ -1,8 +1,6 @@
 export const hostname = () => {
   const host = window.location.hostname
-  return host === process.env.NEXT_PUBLIC_ADMIN_ROUTE
-    ? "admin"
-    : process.env.NEXT_PUBLIC_USER_ROUTE
-    ? "user"
-    : "error"
+  if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) return "admin"
+  if (host === process.env.NEXT_PUBLIC_USER_ROUTE) return "user"
+  return "error"
 }
