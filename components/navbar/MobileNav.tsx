@@ -44,7 +44,7 @@ const MobileNav = () => {
   return (
     <div className="fixed top-0 left-0 right-0 lg:hidden text-gray-900 bg-white z-[50000]">
       <div className="flex p-3 justify-between items-center">
-        <p className="font-semibold text-lg">Dept. of CSE, PIT</p>
+        <p className="font-semibold text-lg">PIT Portal</p>
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <IoClose size={25} /> : <FiMenu size={25} />}
         </div>
