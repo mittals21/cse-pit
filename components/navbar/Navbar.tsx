@@ -25,16 +25,21 @@ const Navbar = () => {
   ])
 
   useEffect(() => {
-    dispatch(getAllData())
-    const host = hostname()
-    if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
-      setData((prev) => [
-        ...prev,
-        { title: "Upload", path: "/uploads" },
-        { title: "Students", path: "/students" },
-      ])
+    const mainLogicSetter = () => {
+      const host = hostname()
+      if (!host || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
+      dispatch(getAllData())
+      if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
+        console.log("is working?")
+        setData((prev) => [
+          ...prev,
+          { title: "Upload", path: "/uploads" },
+          { title: "Students", path: "/students" },
+        ])
+      }
+      dispatch(setHostName(host))
     }
-    dispatch(setHostName(host))
+    mainLogicSetter()
   }, [])
 
   useEffect(() => {
