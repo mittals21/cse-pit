@@ -1,7 +1,7 @@
 import { ExamFilterData } from "@/utils/type"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import React, { useState } from "react"
+import React from "react"
 
 const ShowExam = ({
   filteredData,
@@ -17,9 +17,9 @@ const ShowExam = ({
       {filteredData && filteredData?.length > 0 ? (
         filteredData?.map((e: ExamFilterData) => (
           <div
-            key={e?._id}
+            key={e?.id}
             className="relative overflow-hidden rounded-lg shadow-md "
-            onClick={() => router.push(`/${e?.file?.cloudinary_id}`)}
+            onClick={() => router.push(`/${e?.id}`)}
           >
             <Image
               src="https://api.ignitehost.in/api/v-1/view/a6319350-b6cf-11ee-b929-f5a9fff8a41a/file_20240119193411_b851b86b-b701-11ee-b929-f5a9fff8a41a.jpg/"
@@ -29,7 +29,7 @@ const ShowExam = ({
               alt=""
             />
             <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-60 text-white text-center py-2">
-              {e?.file?.exam_type}
+              {e?.examType}
             </div>
           </div>
         ))

@@ -4,6 +4,7 @@ import { MySelector } from "@/redux/store"
 import { CircularData } from "@/utils/type"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
+import Loader from "../loader/Loader"
 
 const Circulars = () => {
   const router = useRouter()
@@ -34,33 +35,42 @@ const Circulars = () => {
         Circulars
       </p>
       <div className="border-2 border-my-green max-h-[300px] overflow-y-scroll bg-white/85 px-2 lg:px-5">
-        {pageData && pageData?.length > 0 ? (
-          pageData
-            ?.map((e: any) => (
-              <div
-                key={e?.id}
-                className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] gap-10"
-              >
-                <p
-                  className="hover:underline text-lg lg:text-2xl cursor-pointer"
-                  onClick={() => router.push(`circular/${e?.id}`)}
+        {pageData ? (
+          pageData?.length > 0 ? (
+            pageData
+              ?.map((e: any) => (
+                <div
+                  key={e?.id}
+                  className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] gap-10"
                 >
-                  {e?.name}{" "}
-                  <span className="ml-2 text-gray-600 text-base">
-                    ({e?.for === "all" ? "All Semesters" : `Semester ${e?.for}`}
-                    )
-                  </span>
-                </p>
-                <p className="text-sm lg:text-base text-gray-500">
-                  {getDateString(e?.createdAt)}
-                </p>
-              </div>
-            ))
-            .reverse()
+                  <p
+                    className="hover:underline text-lg lg:text-2xl cursor-pointer"
+                    onClick={() => router.push(`circular/${e?.id}`)}
+                  >
+                    {e?.name}{" "}
+                    <span className="ml-2 text-gray-600 text-base">
+                      (
+                      {e?.for === "all"
+                        ? "All Semesters"
+                        : `Semester ${e?.for}`}
+                      )
+                    </span>
+                  </p>
+                  <p className="text-sm lg:text-base text-gray-500">
+                    {getDateString(e?.createdAt)}
+                  </p>
+                </div>
+              ))
+              .reverse()
+          ) : (
+            <p className="px-20 py-10 text-xl font-medium">
+              No Circulars to Show
+            </p>
+          )
         ) : (
-          <p className="px-20 py-10 text-xl font-medium">
-            No Circulars to Show
-          </p>
+          <div className="px-40 py-20">
+            <Loader />
+          </div>
         )}
       </div>
     </div>

@@ -2,22 +2,21 @@
 import { getAllData } from "@/redux/dataSlice"
 import { MyDispatch } from "@/redux/store"
 import { NavbarRoutes } from "@/utils/type"
-import { usePathname, useRouter } from "next/navigation"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { FiMenu } from "react-icons/fi"
 import { IoClose } from "react-icons/io5"
 import { useDispatch } from "react-redux"
 
 const MobileNav = () => {
-  const router = useRouter()
   const dispatch = useDispatch<MyDispatch>()
 
   const location = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [active, setActive] = useState<string>("Home")
 
-  const handleClick = (url: string, title: string) => {
-    router.push(url)
+  const handleClick = (title: string) => {
     setActive(title)
     setIsMenuOpen(false)
   }
@@ -34,9 +33,9 @@ const MobileNav = () => {
     // { title: "Students", path: "/students" },
   ]
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllData())
-  },[])
+  }, [])
 
   useEffect(() => {
     setActive(data?.find((d) => d?.path === location)?.title || "")
@@ -55,16 +54,17 @@ const MobileNav = () => {
           isMenuOpen ? "p-3 border border-black" : "h-0 overflow-hidden"
         } transition-all duration-200 ease-linear`}
       >
-        {data?.map((e:NavbarRoutes) => (
-          <button
-            key={e?.title}
-            className={`${e?.title === active ? "underline" : ""} ${
-              e?.title === "Home" && location === "/" ? "hidden" : ""
-            }`}
-            onClick={() => handleClick(e?.path, e?.title)}
-          >
-            {e?.title}
-          </button>
+        {data?.map((e: NavbarRoutes) => (
+          <Link href={e?.path} key={e?.title}>
+            <button
+              className={`${e?.title === active ? "underline" : ""} ${
+                e?.title === "Home" && location === "/" ? "hidden" : ""
+              }`}
+              onClick={() => handleClick(e?.title)}
+            >
+              {e?.title}
+            </button>
+          </Link>
         ))}
       </div>
     </div>

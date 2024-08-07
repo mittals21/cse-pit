@@ -32,23 +32,29 @@ const SyllabusRow = ({
         <p>Updated</p>
         <p>Menu</p>
       </div>
-      {filteredData && filteredData?.length > 0 ? (
-        filteredData?.map((e, index) => (
-          <div
-            key={e?.id}
-            className="grid text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2"
-            style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
-            onClick={() => router.push(`/syllabus/${e?.id}`)}
-          >
-            <p>{index + 1}</p>
-            <p>{e?.subject}</p>
-            <p>{getDateString(e?.createdAt)}</p>
-            <p>{getDateString(e?.updatedAt)}</p>
-            <p className="flex justify-center">
-              <CiMenuKebab />
-            </p>
+      {filteredData ? (
+        filteredData?.length > 0 ? (
+          filteredData?.map((e, index) => (
+            <div
+              key={e?.id}
+              className="grid text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2"
+              style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
+              onClick={() => router.push(`/syllabus/${e?.id}`)}
+            >
+              <p>{index + 1}</p>
+              <p>{e?.subject}</p>
+              <p>{getDateString(e?.createdAt)}</p>
+              <p>{getDateString(e?.updatedAt)}</p>
+              <p className="flex justify-center">
+                <CiMenuKebab />
+              </p>
+            </div>
+          ))
+        ) : (
+          <div className="text-center text-2xl font-medium py-6">
+            No data available.
           </div>
-        ))
+        )
       ) : (
         <div className="text-center text-2xl font-medium py-6">
           No data available.

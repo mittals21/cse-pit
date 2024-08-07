@@ -13,6 +13,8 @@ const Exam = () => {
 
   const { data } = MySelector((state) => state?.data)
 
+  console.log(pageData, filteredData)
+
   useEffect(() => {
     const pageDataSetter = () => {
       if (!data) return
@@ -26,7 +28,7 @@ const Exam = () => {
       if (!dept || !sem || !pageData) return
       if (dept === "default" || sem === "default") setFilteredData(null)
       const filtered = pageData.filter(
-        (i) => i?.department === dept && i?.semester === Number(sem)
+        (i) => i?.department === dept && i?.semester === sem
       )
       setFilteredData(filtered)
     }

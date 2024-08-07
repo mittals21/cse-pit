@@ -1,6 +1,7 @@
 "use client"
 import Loader from "@/components/loader/Loader"
 import UploadStudentSheet from "@/components/uploads/UploadStudentSheet"
+import { FaCheck } from "react-icons/fa"
 import { allUploads } from "@/firebase"
 import { getAllData } from "@/redux/dataSlice"
 import { MyDispatch, MySelector } from "@/redux/store"
@@ -17,6 +18,7 @@ const AllUploads = () => {
   const [uploadType, setUploadType] = useState<string>("")
   const [department, setDepartment] = useState<string>("")
   const [semester, setSemester] = useState<string>("")
+  const [examType, setExamType] = useState<string>("")
   const [apiCall, setApiCall] = useState<boolean>(false)
   const { data } = MySelector((state) => state.data)
 
@@ -50,6 +52,8 @@ const AllUploads = () => {
         ? { file, name, for: semester }
         : uploadType === "syllabus"
         ? { file, subject: name, semester, department }
+        : uploadType === "exam"
+        ? { file, semester, department, examType }
         : null
 
     const res = await allUploads(uploadType, newData, data)
@@ -84,8 +88,9 @@ const AllUploads = () => {
               className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
             >
               <option value="">---Select Type---</option>
-              <option value="syllabus">Syllabus</option>
               <option value="circular">Circular</option>
+              <option value="syllabus">Syllabus</option>
+              <option value="exam">Exam</option>
             </select>
           </div>
           <div>
@@ -139,14 +144,63 @@ const AllUploads = () => {
                 </select>
               )}
             </div>
+            {uploadType === "exam" && (
+              <div>
+                <select
+                  onChange={(e) => setDepartment(e.target.value)}
+                  value={department}
+                  className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
+                >
+                  <option value="">---Select Department---</option>
+                  <option value="core">CSE</option>
+                  <option value="ai">AI</option>
+                </select>
+                {department && (
+                  <select
+                    onChange={(e) => setSemester(e.target.value)}
+                    value={semester}
+                    className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
+                  >
+                    <option value="">---Select Semester---</option>
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="3">3rd Semester</option>
+                    <option value="4">4th Semester</option>
+                    <option value="5">5th Semester</option>
+                    <option value="6">6th Semester</option>
+                    <option value="7">7th Semester</option>
+                    <option value="8">8th Semester</option>
+                  </select>
+                )}
+                {semester && (
+                  <select
+                    onChange={(e) => setExamType(e.target.value)}
+                    value={examType}
+                    className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
+                  >
+                    <option value="">---Select Exam Type---</option>
+                    <option value="practical">Practical</option>
+                    <option value="midsem">Midsem</option>
+                    <option value="endsem">Endsem</option>
+                    <option value="remid">Remid</option>
+                  </select>
+                )}
+              </div>
+            )}
           </div>
           <div
             className="rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px]"
             onClick={handleInput}
           >
-            <div className="text-[60px] flex justify-center items-center text-my-green ">
-              <IoMdCloudUpload />
-            </div>
+            {file ? (
+              <div className="text-[60px] flex justify-center items-center text-my-green">
+                <FaCheck />
+              </div>
+            ) : (
+              <div className="text-[60px] flex justify-center items-center text-my-green/70">
+                <IoMdCloudUpload />
+              </div>
+            )}
             <p className="text-center">{file ? file.name : "Upload a File"}</p>
 
             <input

@@ -1,4 +1,5 @@
 "use client"
+import Loader from "@/components/loader/Loader"
 import SyllabusRow from "@/components/syllabus/SyllabusRow"
 import { MySelector } from "@/redux/store"
 import { SyllabusData } from "@/utils/type"
@@ -73,7 +74,13 @@ const Syllabus = () => {
       </div>
       {/* )} */}
 
-      <SyllabusRow filteredData={filteredData} />
+      {pageData ? (
+        <SyllabusRow filteredData={filteredData} />
+      ) : (
+        <div className="flex w-screen justify-center items-center py-20">
+          <Loader />
+        </div>
+      )}
     </div>
   )
 }

@@ -1,17 +1,13 @@
 export type NavbarRoutes = { title: string; path: string }
 
 export type ExamFilterData = {
-  file: {
-    avatar: string
-    cloudinary_id: string
-    exam_type: string
-  }
-  _id: string
-  semester: number
+  file: string
+  id: string
+  semester: string
   department: string
   createdAt: string
   updatedAt: string
-  __v: number
+  examType: string
 }
 
 export type SyllabusData = {
@@ -71,4 +67,11 @@ export type SyllabusUpload = {
   department: string
 }
 
-export type AllUploads = CircularUpload | SyllabusUpload
+export type ExamUpload = {
+  file: File | null
+  examType: string
+  semester: string
+  department: string
+}
+
+export type AllUploads = CircularUpload | SyllabusUpload | ExamUpload

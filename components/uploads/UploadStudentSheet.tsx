@@ -3,6 +3,7 @@ import { IoMdCloudUpload } from "react-icons/io"
 import { uploadExcelSheet } from "@/firebase"
 import { toast } from "react-toastify"
 import { getAllData } from "@/redux/dataSlice"
+import { FaCheck } from "react-icons/fa"
 import { useDispatch } from "react-redux"
 import { MyDispatch } from "@/redux/store"
 
@@ -34,9 +35,15 @@ const UploadStudentSheet = () => {
         className="rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px]"
         onClick={handleInput}
       >
-        <div className="text-[60px] flex justify-center items-center text-my-green">
-          <IoMdCloudUpload />
-        </div>
+        {excelFile ? (
+          <div className="text-[60px] flex justify-center items-center text-my-green">
+            <FaCheck />
+          </div>
+        ) : (
+          <div className="text-[60px] flex justify-center items-center text-my-green/70">
+            <IoMdCloudUpload />
+          </div>
+        )}
         <p className="text-center">
           {excelFile ? excelFile.name : "Upload students sheet"}
         </p>

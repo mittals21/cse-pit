@@ -2,6 +2,7 @@
 import { getAllData } from "@/redux/dataSlice"
 import { MyDispatch } from "@/redux/store"
 import { NavbarRoutes } from "@/utils/type"
+import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
@@ -12,11 +13,6 @@ const Navbar = () => {
   const location = usePathname()
   const [active, setActive] = useState<string>("Home")
 
-  const handleClick = (url: string, title: string) => {
-    router.push(url)
-    setActive(title)
-  }
-
   const data: Array<NavbarRoutes> = [
     { title: "Home", path: "/" },
     { title: "CSE Dept.", path: "/department" },
@@ -25,8 +21,8 @@ const Navbar = () => {
     { title: "Events", path: "/events" },
     { title: "Help", path: "/help" },
     { title: "Contact Us", path: "/contact" },
-    { title: "Upload", path: "/uploads" },
-    { title: "Students", path: "/students" },
+    // { title: "Upload", path: "/uploads" },
+    // { title: "Students", path: "/students" },
   ]
 
   useEffect(() => {
@@ -46,15 +42,16 @@ const Navbar = () => {
 
         <div className="flex gap-5 items-center">
           {data?.map((e: NavbarRoutes) => (
-            <button
-              key={e?.title}
-              className={`${e?.title === active ? "underline" : ""} ${
-                e?.title === "Home" && location === "/" ? "hidden" : ""
-              }`}
-              onClick={() => handleClick(e?.path, e?.title)}
-            >
-              {e?.title}
-            </button>
+            <Link href={e?.path} key={e?.title}>
+              <button
+                className={`${e?.title === active ? "underline" : ""} ${
+                  e?.title === "Home" && location === "/" ? "hidden" : ""
+                }`}
+                onClick={() => setActive(e?.title)}
+              >
+                {e?.title}
+              </button>
+            </Link>
           ))}
         </div>
       </div>
