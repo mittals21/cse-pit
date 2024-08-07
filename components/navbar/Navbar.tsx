@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 
 const Navbar = () => {
+  const host = hostname()
   const router = useRouter()
   const dispatch = useDispatch<MyDispatch>()
   const location = usePathname()
@@ -25,11 +26,14 @@ const Navbar = () => {
   ])
 
   useEffect(() => {
-    const mainLogicSetter = () => {
-      const host = hostname()
+    dispatch(getAllData())
+    dispatch(setHostName(host))
+  }, [])
+
+  useEffect(() => {
+    const changePage = () => {
       if (!host || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
-      dispatch(getAllData())
-      if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
+      if (host == process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
         console.log("is working?")
         setData((prev) => [
           ...prev,
@@ -37,10 +41,9 @@ const Navbar = () => {
           { title: "Students", path: "/students" },
         ])
       }
-      dispatch(setHostName(host))
     }
-    mainLogicSetter()
-  }, [])
+    changePage()
+  }, [host])
 
   useEffect(() => {
     setActive(data?.find((d) => d?.path === location)?.title || "Home")
