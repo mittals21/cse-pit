@@ -19,15 +19,21 @@ const initialState: {
   status: string
   data: any
   error: any
+  host: string | null
 } = {
   data: [],
   status: "",
   error: null,
+  host: null,
 }
 const data = createSlice({
   name: "data",
   initialState,
-  reducers: {},
+  reducers: {
+    setHostName: (state, action) => {
+      state.host = action.payload
+    },
+  },
   extraReducers: (builder) => {
     // Get All Data
     builder.addCase(getAllData.pending, (state) => {
@@ -45,4 +51,5 @@ const data = createSlice({
   },
 })
 
+export const { setHostName } = data.actions
 export default data.reducer

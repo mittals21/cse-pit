@@ -20,7 +20,7 @@ const AllUploads = () => {
   const [semester, setSemester] = useState<string>("")
   const [examType, setExamType] = useState<string>("")
   const [apiCall, setApiCall] = useState<boolean>(false)
-  const { data } = MySelector((state) => state.data)
+  const { data, host } = MySelector((state) => state.data)
 
   // For opening file manager
   const handleInput = () => {
@@ -76,6 +76,14 @@ const AllUploads = () => {
       setDepartment("")
     }
   }, [uploadType])
+
+  useEffect(() => {
+    const changePage = () => {
+      if (!host) return
+      if (host !== "admin") window.location.href = "/"
+    }
+    changePage()
+  }, [host])
 
   return (
     <div className="px-60 my-[100px] ">

@@ -1,6 +1,8 @@
 "use client"
-import { getAllData } from "@/redux/dataSlice"
+
+import { getAllData, setHostName } from "@/redux/dataSlice"
 import { MyDispatch } from "@/redux/store"
+import { hostname } from "@/utils/hostname"
 import { NavbarRoutes } from "@/utils/type"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -21,12 +23,13 @@ const Navbar = () => {
     { title: "Events", path: "/events" },
     { title: "Help", path: "/help" },
     { title: "Contact Us", path: "/contact" },
-    // { title: "Upload", path: "/uploads" },
-    // { title: "Students", path: "/students" },
+    { title: "Upload", path: "/uploads" },
+    { title: "Students", path: "/students" },
   ]
 
   useEffect(() => {
     dispatch(getAllData())
+    dispatch(setHostName(hostname()))
   }, [])
 
   useEffect(() => {

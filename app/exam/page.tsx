@@ -13,8 +13,6 @@ const Exam = () => {
 
   const { data } = MySelector((state) => state?.data)
 
-  console.log(pageData, filteredData)
-
   useEffect(() => {
     const pageDataSetter = () => {
       if (!data) return
