@@ -6,6 +6,8 @@ import Footer from "@/components/footer/Footer"
 import { ReduxProvider } from "@/redux/provider"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "DEPT. CSE PIT",
@@ -20,6 +22,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Analytics />
+        <SpeedInsights />
         <ReduxProvider>
           <ToastContainer
             theme="colored"
@@ -29,7 +33,6 @@ export default function RootLayout({
           />
           <Navbar />
           <MobileNav />
-
           {children}
           <Footer />
         </ReduxProvider>
