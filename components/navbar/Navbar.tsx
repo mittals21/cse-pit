@@ -31,8 +31,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const changePage = async () => {
-      if (!hostname() || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
-      if (hostname() == process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
+      if (!process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
+      if (hostname() === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
         console.log("is working?")
         setData((prev) => [
           ...prev,
