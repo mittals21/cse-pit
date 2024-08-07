@@ -23,13 +23,18 @@ const Navbar = () => {
     { title: "Events", path: "/events" },
     { title: "Help", path: "/help" },
     { title: "Contact Us", path: "/contact" },
-    { title: "Upload", path: "/uploads" },
-    { title: "Students", path: "/students" },
   ]
 
   useEffect(() => {
     dispatch(getAllData())
-    dispatch(setHostName(hostname()))
+    const host = hostname()
+    if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
+      data.push(
+        { title: "Upload", path: "/uploads" },
+        { title: "Students", path: "/students" }
+      )
+    }
+    dispatch(setHostName(host))
   }, [])
 
   useEffect(() => {
