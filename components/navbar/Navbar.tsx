@@ -37,7 +37,7 @@ const Navbar = () => {
     <div className="hidden lg:block border-b border-b-black fixed z-[50000] top-0 left-0 right-0 bg-white">
       <div className="flex p-5 text-base text-gray-900 items-center justify-between w-full sticky top-0 left-0 right-0 z-[111]">
         <p className="font-semibold text-xl" onClick={() => router.push("/")}>
-          Dept. of CSE, PIT
+          PIT Portal
         </p>
 
         <div className="flex gap-5 items-center">
