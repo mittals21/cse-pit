@@ -29,16 +29,16 @@ const Navbar = () => {
   useEffect(() => {
     dispatch(getAllData())
     dispatch(setHostName(hostname()))
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     setActive(data?.find((d) => d?.path === location)?.title || "Home")
-  }, [location])
+  }, [location, data])
 
   useEffect(() => {
     const changePage = () => {
-      if (!host || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
-      if (host === process.env.NEXT_PUBLIC_ADMIN_ROUTE) {
+      if (!host) return
+      if (host === "admin") {
         setData([
           { title: "Home", path: "/" },
           { title: "CSE Dept.", path: "/department" },

@@ -1,10 +1,9 @@
 "use client"
-import { getAllData, setHostName } from "@/redux/dataSlice"
+import { getAllData } from "@/redux/dataSlice"
 import { MyDispatch } from "@/redux/store"
 import { NavbarRoutes } from "@/utils/type"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { hostname } from "os"
 import React, { useEffect, useState } from "react"
 import { FiMenu } from "react-icons/fi"
 import { IoClose } from "react-icons/io5"
@@ -34,7 +33,6 @@ const MobileNav = () => {
 
   useEffect(() => {
     dispatch(getAllData())
-    dispatch(setHostName(hostname()))
   }, [])
 
   useEffect(() => {

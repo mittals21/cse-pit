@@ -19,7 +19,7 @@ const ShowExam = ({
           <div
             key={e?.id}
             className="relative overflow-hidden rounded-lg shadow-md "
-            onClick={() => router.push(`/${e?.id}`)}
+            onClick={() => router.push(`/exam/${e?.id}`)}
           >
             <Image
               src="https://api.ignitehost.in/api/v-1/view/a6319350-b6cf-11ee-b929-f5a9fff8a41a/file_20240119193411_b851b86b-b701-11ee-b929-f5a9fff8a41a.jpg/"
