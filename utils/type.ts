@@ -74,4 +74,16 @@ export type ExamUpload = {
   department: string
 }
 
-export type AllUploads = CircularUpload | SyllabusUpload | ExamUpload
+export type EventUpload = {
+  file: File | null
+  name: string
+  link: string
+  coordinator: string
+  deadline?: string
+}
+
+export type AllUploads =
+  | CircularUpload
+  | SyllabusUpload
+  | ExamUpload
+  | EventUpload

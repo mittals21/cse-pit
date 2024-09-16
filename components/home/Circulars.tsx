@@ -41,13 +41,15 @@ const Circulars = () => {
               ?.map((e: any) => (
                 <div
                   key={e?.id}
-                  className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] gap-10"
+                  className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] sm:max-w-[500px] gap-10"
                 >
-                  <p
+                  <div
                     className="hover:underline text-lg lg:text-2xl cursor-pointer"
                     onClick={() => router.push(`circular/${e?.id}`)}
                   >
-                    {e?.name}{" "}
+                    <span title={e?.name}>
+                      {e?.name?.length > 16 ? `${e?.name?.slice(0, 16)}...` : e?.name}
+                    </span>
                     <span className="ml-2 text-gray-600 text-base">
                       (
                       {e?.for === "all"
@@ -55,7 +57,7 @@ const Circulars = () => {
                         : `Semester ${e?.for}`}
                       )
                     </span>
-                  </p>
+                  </div>
                   <p className="text-sm lg:text-base text-gray-500">
                     {getDateString(e?.createdAt)}
                   </p>

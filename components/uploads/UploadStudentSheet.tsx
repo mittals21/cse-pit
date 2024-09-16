@@ -30,47 +30,76 @@ const UploadStudentSheet = () => {
   }
 
   return (
-    <div className="flex-1">
-      <div
-        className="rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px]"
-        onClick={handleInput}
-      >
-        {excelFile ? (
-          <div className="text-[60px] flex justify-center items-center text-my-green">
-            <FaCheck />
-          </div>
+    <div>
+      <input
+        type="file"
+        accept=".xlsx,.xls,.xlsm,.ods,.ots,.xlsb,.xltx"
+        placeholder="Upload"
+        className="hidden"
+        ref={inputRef}
+        onChange={(e) => handleFileUpload(e.target.files)}
+      />
+      <div className="flex justify-end mt-2 mr-2">
+        {excelFile === null ? (
+          <button
+            onClick={handleInput}
+            className="bg-my-green/20 text-black cursor-pointer rounded-lg px-[20px] py-[8px] flex justify-center"
+          >
+            Select New Students Sheet
+          </button>
         ) : (
-          <div className="text-[60px] flex justify-center items-center text-my-green/70">
-            <IoMdCloudUpload />
-          </div>
+          <button
+            onClick={upload}
+            className="bg-my-green text-white cursor-pointer rounded-lg px-[20px] py-[8px] flex justify-center"
+          >
+            Upload
+          </button>
         )}
-        <p className="text-center">
-          {excelFile ? excelFile.name : "Upload students sheet"}
-        </p>
-        <input
-          type="file"
-          accept=".xlsx,.xls,.xlsm,.ods,.ots,.xlsb,.xltx"
-          placeholder="Upload"
-          className="hidden"
-          ref={inputRef}
-          onChange={(e) => handleFileUpload(e.target.files)}
-        />
-      </div>
-      <div className="flex justify-end my-2">
-        <button
-          onClick={upload}
-          className={`${
-            excelFile === null
-              ? "bg-my-green/20 text-black cursor-not-allowed"
-              : "bg-my-green text-white cursor-pointer"
-          } rounded-lg px-[20px] py-[8px] flex justify-center`}
-          disabled={excelFile === null}
-        >
-          Upload
-        </button>
       </div>
     </div>
   )
+  // return (
+  //   <div className="flex-1">
+  //     <div
+  //       className="rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px]"
+  //       onClick={handleInput}
+  //     >
+  //       {excelFile ? (
+  //         <div className="text-[60px] flex justify-center items-center text-my-green">
+  //           <FaCheck />
+  //         </div>
+  //       ) : (
+  //         <div className="text-[60px] flex justify-center items-center text-my-green/70">
+  //           <IoMdCloudUpload />
+  //         </div>
+  //       )}
+  //       <p className="text-center">
+  //         {excelFile ? excelFile.name : "Upload students sheet"}
+  //       </p>
+  //       <input
+  //         type="file"
+  //         accept=".xlsx,.xls,.xlsm,.ods,.ots,.xlsb,.xltx"
+  //         placeholder="Upload"
+  //         className="hidden"
+  //         ref={inputRef}
+  //         onChange={(e) => handleFileUpload(e.target.files)}
+  //       />
+  //     </div>
+  //     <div className="flex justify-end my-2">
+  //       <button
+  //         onClick={upload}
+  //         className={`${
+  //           excelFile === null
+  //             ? "bg-my-green/20 text-black cursor-not-allowed"
+  //             : "bg-my-green text-white cursor-pointer"
+  //         } rounded-lg px-[20px] py-[8px] flex justify-center`}
+  //         disabled={excelFile === null}
+  //       >
+  //         Upload
+  //       </button>
+  //     </div>
+  //   </div>
+  // )
 }
 
 export default UploadStudentSheet

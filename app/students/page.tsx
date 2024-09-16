@@ -6,6 +6,7 @@ import StudentRow from "@/components/students/StudentRow"
 import { MySelector } from "@/redux/store"
 import { StudentData } from "@/utils/type"
 import { toast } from "react-toastify"
+import UploadStudentSheet from "@/components/uploads/UploadStudentSheet"
 
 const StudentTable = () => {
   const tableRef = useRef<HTMLDivElement>(null)
@@ -92,9 +93,8 @@ const StudentTable = () => {
 
   useEffect(() => {
     const changePage = () => {
-      if (!host || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
-      if (host !== process.env.NEXT_PUBLIC_ADMIN_ROUTE)
-        window.location.href = "/"
+      if (!host) return
+      if (host !== "admin") window.location.href = "/"
     }
     changePage()
   }, [host])
@@ -113,6 +113,9 @@ const StudentTable = () => {
       ref={tableRef}
       className="mx-5 my-[100px] tracking-wide relative border-[2px] overflow-y-scroll border-my-green rounded-md "
     >
+      <div className="">
+        <UploadStudentSheet />
+      </div>
       <div className="sticky bg-white top-0 px-2 pt-2">
         <div
           className="grid font-medium text-2xl text-center capitalize mb-2 relative"

@@ -34,7 +34,7 @@ export default function RootLayout({
           <Navbar />
           <MobileNav />
           {children}
-          <Footer />
+          <Footer /> 
         </ReduxProvider>
       </body>
     </html>

@@ -9,6 +9,13 @@ import React, { ChangeEvent, useEffect, useRef, useState } from "react"
 import { IoMdCloudUpload } from "react-icons/io"
 import { useDispatch } from "react-redux"
 import { toast } from "react-toastify"
+import {
+  departments,
+  dropdowns,
+  examTypes,
+  semesters,
+  uploadTypes,
+} from "@/utils/common"
 
 const AllUploads = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -20,6 +27,11 @@ const AllUploads = () => {
   const [semester, setSemester] = useState<string>("")
   const [examType, setExamType] = useState<string>("")
   const [apiCall, setApiCall] = useState<boolean>(false)
+  const [eventData, setEventData] = useState<{
+    link: string
+    coordinator: string
+    deadline?: string
+  }>({ link: "", coordinator: "", deadline: "" })
   const { data, host } = MySelector((state) => state.data)
 
   // For opening file manager
@@ -44,6 +56,19 @@ const AllUploads = () => {
     }
   }
 
+  // active upload logic
+  const notAllowUpload = () => {
+    if (!uploadType || !name || !file) return true
+    if (uploadType === "syllabus" && !department) return true
+    if (uploadType === "event") {
+      if (!eventData?.link || !eventData?.coordinator) return true
+    } else {
+      if (!semester) return true
+    }
+
+    return false
+  }
+
   // For uploading data
   const upload = async () => {
     setApiCall(true)
@@ -54,6 +79,14 @@ const AllUploads = () => {
         ? { file, subject: name, semester, department }
         : uploadType === "exam"
         ? { file, semester, department, examType }
+        : uploadType === "event"
+        ? {
+            file,
+            name,
+            link: eventData?.link,
+            coordinator: eventData?.coordinator,
+            deadline: eventData?.deadline,
+          }
         : null
 
     const res = await allUploads(uploadType, newData, data)
@@ -68,6 +101,7 @@ const AllUploads = () => {
     setApiCall(false)
     setFile(null)
     setName("")
+    setEventData({ link: "", coordinator: "", deadline: "" })
   }
 
   // For clearing the department value if circular is selected
@@ -79,9 +113,8 @@ const AllUploads = () => {
 
   useEffect(() => {
     const changePage = () => {
-      if (!host || !process.env.NEXT_PUBLIC_ADMIN_ROUTE) return
-      if (host !== process.env.NEXT_PUBLIC_ADMIN_ROUTE)
-        window.location.href = "/"
+      if (!host) return
+      if (host !== "admin") window.location.href = "/"
     }
     changePage()
   }, [host])
@@ -97,9 +130,11 @@ const AllUploads = () => {
               className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
             >
               <option value="">---Select Type---</option>
-              <option value="circular">Circular</option>
-              <option value="syllabus">Syllabus</option>
-              <option value="exam">Exam</option>
+              {uploadTypes?.map((ut: dropdowns) => (
+                <option key={ut?.value} value={ut?.value}>
+                  {ut?.name}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -111,8 +146,11 @@ const AllUploads = () => {
                   className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                 >
                   <option value="">---Select Department---</option>
-                  <option value="core">CSE</option>
-                  <option value="ai">AI</option>
+                  {departments?.map((d: dropdowns) => (
+                    <option key={d?.value} value={d?.value}>
+                      {d?.name}
+                    </option>
+                  ))}
                 </select>
                 {department && (
                   <select
@@ -121,14 +159,11 @@ const AllUploads = () => {
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
                     <option value="">---Select Semester---</option>
-                    <option value="1">1st Semester</option>
-                    <option value="2">2nd Semester</option>
-                    <option value="3">3rd Semester</option>
-                    <option value="4">4th Semester</option>
-                    <option value="5">5th Semester</option>
-                    <option value="6">6th Semester</option>
-                    <option value="7">7th Semester</option>
-                    <option value="8">8th Semester</option>
+                    {semesters?.map((s: dropdowns) => (
+                      <option key={s?.value} value={s?.value}>
+                        {s?.name}
+                      </option>
+                    ))}
                   </select>
                 )}
               </div>
@@ -142,14 +177,11 @@ const AllUploads = () => {
                 >
                   <option value="semester">---Select Semester---</option>
                   <option value="all">All Semesters</option>
-                  <option value="1">1st Semester</option>
-                  <option value="2">2nd Semester</option>
-                  <option value="3">3rd Semester</option>
-                  <option value="4">4th Semester</option>
-                  <option value="5">5th Semester</option>
-                  <option value="6">6th Semester</option>
-                  <option value="7">7th Semester</option>
-                  <option value="8">8th Semester</option>
+                  {semesters?.map((s: dropdowns) => (
+                    <option key={s?.value} value={s?.value}>
+                      {s?.name}
+                    </option>
+                  ))}
                 </select>
               )}
             </div>
@@ -161,8 +193,11 @@ const AllUploads = () => {
                   className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                 >
                   <option value="">---Select Department---</option>
-                  <option value="core">CSE</option>
-                  <option value="ai">AI</option>
+                  {departments?.map((d: dropdowns) => (
+                    <option key={d?.value} value={d?.value}>
+                      {d?.name}
+                    </option>
+                  ))}
                 </select>
                 {department && (
                   <select
@@ -171,14 +206,12 @@ const AllUploads = () => {
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
                     <option value="">---Select Semester---</option>
-                    <option value="1">1st Semester</option>
-                    <option value="2">2nd Semester</option>
-                    <option value="3">3rd Semester</option>
-                    <option value="4">4th Semester</option>
-                    <option value="5">5th Semester</option>
-                    <option value="6">6th Semester</option>
-                    <option value="7">7th Semester</option>
-                    <option value="8">8th Semester</option>
+                    <option value="all">All Semesters</option>
+                    {semesters?.map((s: dropdowns) => (
+                      <option key={s?.value} value={s?.value}>
+                        {s?.name}
+                      </option>
+                    ))}
                   </select>
                 )}
                 {semester && (
@@ -188,10 +221,11 @@ const AllUploads = () => {
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
                     <option value="">---Select Exam Type---</option>
-                    <option value="practical">Practical</option>
-                    <option value="midsem">Midsem</option>
-                    <option value="endsem">Endsem</option>
-                    <option value="remid">Remid</option>
+                    {examTypes?.map((et: dropdowns) => (
+                      <option key={et?.value} value={et?.value}>
+                        {et?.name}
+                      </option>
+                    ))}
                   </select>
                 )}
               </div>
@@ -232,34 +266,57 @@ const AllUploads = () => {
             onChange={(e) => setName(e.target.value)}
             className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
           />
+          {uploadType === "event" && (
+            <>
+              <input
+                type="text"
+                placeholder="Registration Link"
+                value={eventData?.link}
+                onChange={(e) =>
+                  setEventData((prev) => ({ ...prev, link: e.target.value }))
+                }
+                className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
+              />
+              <input
+                type="text"
+                placeholder="Coordinator Name"
+                value={eventData?.coordinator}
+                onChange={(e) =>
+                  setEventData((prev) => ({
+                    ...prev,
+                    coordinator: e.target.value,
+                  }))
+                }
+                className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
+              />
+              <input
+                type="text"
+                placeholder="Deadline"
+                value={eventData?.deadline}
+                onChange={(e) =>
+                  setEventData((prev) => ({
+                    ...prev,
+                    deadline: e.target.value,
+                  }))
+                }
+                className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
+              />
+            </>
+          )}
         </div>
         <div className="flex justify-end">
           <button
             onClick={upload}
             className={`${
-              !file ||
-              !name ||
-              !uploadType ||
-              (uploadType === "syllabus" && !department) ||
-              !semester
+              notAllowUpload()
                 ? "bg-my-green/20 text-black cursor-not-allowed"
                 : "bg-my-green text-white cursor-pointer"
             } rounded-lg px-[20px] py-[8px] flex justify-center `}
-            disabled={
-              !file ||
-              !name ||
-              !uploadType ||
-              (uploadType === "syllabus" && !department) ||
-              !semester
-            }
+            disabled={notAllowUpload()}
           >
             {apiCall ? <Loader /> : "Upload"}
           </button>
         </div>
-      </div>
-
-      <div className="mt-20">
-        <UploadStudentSheet />
       </div>
     </div>
   )
