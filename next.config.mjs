@@ -1,8 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  images:{
-    domains:["api.ignitehost.in"]
-  }
-};
+const nextConfig = {};
 
 export default nextConfig;
