@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "update:admin":"git checkout admin && git merge main && git push",
+    "update:main":"git checkout main && git merge admin && git push"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
