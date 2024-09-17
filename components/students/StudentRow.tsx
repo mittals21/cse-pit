@@ -42,8 +42,10 @@ const StudentRow = ({
   return (
     <div
       className={`grid text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2 ${
-        isHovered && "shadow-sm shadow-black/60"
-      } ${isSelected && "bg-my-green text-white"}`}
+        isHovered && "shadow-sm shadow-black/70"
+      } ${isSelected && "bg-my-green text-white"} ${
+        isHovered && !isSelected && "bg-my-green/20"
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => setIsSelected(!isSelected)}

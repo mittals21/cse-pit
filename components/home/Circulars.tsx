@@ -2,24 +2,14 @@
 
 import { MySelector } from "@/redux/store"
 import { CircularData } from "@/utils/type"
-import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import Loader from "../loader/Loader"
+import { getDateString } from "@/utils/common"
+import Link from "next/link"
 
 const Circulars = () => {
-  const router = useRouter()
   const [pageData, setPageData] = useState<Array<CircularData> | null>(null)
   const { data } = MySelector((state) => state?.data)
-
-  const getDateString = (timestamp: string) => {
-    const date = new Date(timestamp)
-
-    const day = date.getUTCDate()
-    const month = date.getUTCMonth() + 1
-    const year = date.getUTCFullYear()
-
-    return `${day}/${month}/${year}`
-  }
 
   useEffect(() => {
     const pageDataSetter = () => {
@@ -43,12 +33,15 @@ const Circulars = () => {
                   key={e?.id}
                   className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] sm:max-w-[500px] gap-10"
                 >
-                  <div
+                  <Link
+                    href={`circular/${e?.id}`}
+                    target="_blank"
                     className="hover:underline text-lg lg:text-2xl cursor-pointer"
-                    onClick={() => router.push(`circular/${e?.id}`)}
                   >
                     <span title={e?.name}>
-                      {e?.name?.length > 16 ? `${e?.name?.slice(0, 16)}...` : e?.name}
+                      {e?.name?.length > 16
+                        ? `${e?.name?.slice(0, 16)}...`
+                        : e?.name}
                     </span>
                     <span className="ml-2 text-gray-600 text-base">
                       (
@@ -57,7 +50,7 @@ const Circulars = () => {
                         : `Semester ${e?.for}`}
                       )
                     </span>
-                  </div>
+                  </Link>
                   <p className="text-sm lg:text-base text-gray-500">
                     {getDateString(e?.createdAt)}
                   </p>

@@ -29,7 +29,7 @@ const SingleSyllabus = () => {
       {file ? (
         <iframe
           src={file}
-          className="h-screen object-center w-full max-w-[100vw] py-[70px]"
+          className="h-screen object-center w-full max-w-[100vw]"
           // frameBorder="0"
           title={file}
         ></iframe>

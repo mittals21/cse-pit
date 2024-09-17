@@ -1,41 +1,54 @@
+import { getDateString } from "@/utils/common"
 import { ExamFilterData } from "@/utils/type"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import React from "react"
+import { IoOpen } from "react-icons/io5"
 
 const ShowExam = ({
   filteredData,
 }: {
   filteredData: Array<ExamFilterData> | null
 }) => {
-  const router = useRouter()
   return (
-    <div
-      className="grid items-center justify-center gap-16 p-10 mx-16 my-10 "
-      style={{ gridTemplateColumns: "1fr 1fr" }}
-    >
-      {filteredData && filteredData?.length > 0 ? (
-        filteredData?.map((e: ExamFilterData) => (
-          <div
-            key={e?.id}
-            className="relative overflow-hidden rounded-lg shadow-md "
-            onClick={() => router.push(`/exam/${e?.id}`)}
-          >
-            <Image
-              src="https://api.ignitehost.in/api/v-1/view/a6319350-b6cf-11ee-b929-f5a9fff8a41a/file_20240119193411_b851b86b-b701-11ee-b929-f5a9fff8a41a.jpg/"
-              height={1000}
-              width={1000}
-              className="w-full h-full object-cover"
-              alt=""
-            />
-            <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-60 text-white text-center py-2">
-              {e?.examType}
+    <div>
+      <div
+        className="grid font-semibold mt-[50px] border-2 py-3 text-2xl text-center capitalize mx-20"
+        style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
+      >
+        <p>Exam Type</p>
+        <p>Department</p>
+        <p>Semester</p>
+        <p>Uploaded On</p>
+        <p>Open</p>
+      </div>
+
+      {filteredData ? (
+        filteredData?.length > 0 ? (
+          filteredData?.map((e, index) => (
+            <div
+              key={e?.id}
+              className="grid text-lg items-center text-center capitalize border-b border-x py-1 mx-20"
+              style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
+            >
+              <p>{e?.examType}</p>
+              <p>{e?.department}</p>
+              <p>{e?.semester}</p>
+              <p>{getDateString(e?.updatedAt)}</p>
+              <p className="flex justify-center gap-5 items-center">
+                <Link href={`/exam/${e?.id}`} target="_blank">
+                  <IoOpen className="cursor-pointer" size={25} />
+                </Link>
+              </p>
             </div>
+          ))
+        ) : (
+          <div className="text-center text-2xl font-medium py-6">
+            No data available.
           </div>
-        ))
+        )
       ) : (
         <div className="text-center text-2xl font-medium py-6">
-          No data available for the selected department and semester.
+          No data available.
         </div>
       )}
     </div>

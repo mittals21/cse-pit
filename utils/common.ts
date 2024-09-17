@@ -35,3 +35,11 @@ export const examTypes: Array<dropdowns> = [
   { value: "remid", name: "Remid" },
   { value: "supplementary", name: "Supplementary" },
 ]
+
+export const getDateString = (timestamp: string) => {
+  const date = new Date(timestamp)
+  const day = date.getUTCDate()
+  const month = date.getUTCMonth() + 1
+  const year = date.getUTCFullYear()
+  return `${day}/${month}/${year}`
+}

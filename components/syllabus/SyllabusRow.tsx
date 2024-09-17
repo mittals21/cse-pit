@@ -1,52 +1,42 @@
+import { getDateString } from "@/utils/common"
 import { SyllabusData } from "@/utils/type"
-import { useRouter } from "next/navigation"
-import React, { useState } from "react"
-import { CiMenuKebab } from "react-icons/ci"
+import Link from "next/link"
+import React from "react"
+import { IoOpen } from "react-icons/io5"
 
 const SyllabusRow = ({
   filteredData,
 }: {
   filteredData: Array<SyllabusData> | null
 }) => {
-  const router = useRouter()
-
-  const getDateString = (timestamp: string) => {
-    const date = new Date(timestamp)
-
-    const day = date.getUTCDate()
-    const month = date.getUTCMonth() + 1
-    const year = date.getUTCFullYear()
-
-    return `${day}/${month}/${year}`
-  }
-
   return (
     <div>
       <div
-        className="grid font-semibold mt-[50px] border-t border-b py-1.5 text-2xl text-center capitalize"
+        className="grid font-semibold mt-[50px] border-2 py-3 text-2xl text-center capitalize mx-20"
         style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
       >
-        <p>#</p>
         <p>Subject</p>
-        <p>Created</p>
-        <p>Updated</p>
-        <p>Menu</p>
+        <p>Department</p>
+        <p>Semester</p>
+        <p>Uploaded On</p>
+        <p>Open</p>
       </div>
       {filteredData ? (
         filteredData?.length > 0 ? (
           filteredData?.map((e, index) => (
             <div
               key={e?.id}
-              className="grid text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2"
+              className="grid text-lg items-center text-center capitalize border-b border-x py-1 mx-20"
               style={{ gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr" }}
-              onClick={() => router.push(`/syllabus/${e?.id}`)}
             >
-              <p>{index + 1}</p>
               <p>{e?.subject}</p>
-              <p>{getDateString(e?.createdAt)}</p>
+              <p>{e?.department}</p>
+              <p>{e?.semester}</p>
               <p>{getDateString(e?.updatedAt)}</p>
-              <p className="flex justify-center">
-                <CiMenuKebab />
+              <p className="flex justify-center gap-5 items-center">
+                <Link href={`/syllabus/${e?.id}`} target="_blank">
+                  <IoOpen className="cursor-pointer" size={25} />
+                </Link>
               </p>
             </div>
           ))

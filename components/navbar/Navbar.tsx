@@ -14,6 +14,9 @@ const Navbar = () => {
   const router = useRouter()
   const dispatch = useDispatch<MyDispatch>()
   const location = usePathname()
+  const isHiddenRoute = /\/(exam|syllabus|circular|event)\/[a-zA-Z0-9-]+/.test(
+    location
+  )
   const [active, setActive] = useState<string>("Home")
   const { host } = MySelector((state) => state.data)
   const [data, setData] = useState<Array<NavbarRoutes>>([
@@ -56,9 +59,11 @@ const Navbar = () => {
   }, [host])
 
   return (
-    <>
+    <div className={`${isHiddenRoute ? "lg:hidden" : ""}`}>
       {host ? (
-        <div className="hidden lg:block border-b border-b-black fixed z-[50000] top-0 left-0 right-0 bg-white">
+        <div
+          className={`hidden lg:block border-b border-b-black fixed z-[50000] top-0 left-0 right-0 bg-white`}
+        >
           <div className="flex p-5 text-base text-gray-900 items-center justify-between w-full sticky top-0 left-0 right-0 z-[111]">
             <p
               className="font-semibold text-xl"
@@ -88,7 +93,7 @@ const Navbar = () => {
           <Loader />
         </div>
       )}
-    </>
+    </div>
   )
 }
 
