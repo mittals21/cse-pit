@@ -43,3 +43,9 @@ export const getDateString = (timestamp: string) => {
   const year = date.getUTCFullYear()
   return `${day}/${month}/${year}`
 }
+
+export const getDateInput = (dateString: string) => {
+  const dateArray = dateString.split("-")
+  if (dateArray?.length != 3) return "Never"
+  return `${dateArray[2]}/${dateArray[1]}/${dateArray[0]}`
+}

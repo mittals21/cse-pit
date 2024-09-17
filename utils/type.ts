@@ -55,6 +55,18 @@ export type StudentData = {
   }
 }
 
+export type EventData = {
+  file: string
+  id: string
+  coordinator: string
+  name: string
+  createdAt: string
+  updatedAt: string
+  deadline: string
+  link: string
+  image: string
+}
+
 export type CircularUpload = {
   file: File | null
   name: string
@@ -76,6 +88,7 @@ export type ExamUpload = {
 
 export type EventUpload = {
   file: File | null
+  image: string | undefined
   name: string
   link: string
   coordinator: string

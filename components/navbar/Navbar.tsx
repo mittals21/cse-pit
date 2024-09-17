@@ -14,7 +14,7 @@ const Navbar = () => {
   const router = useRouter()
   const dispatch = useDispatch<MyDispatch>()
   const location = usePathname()
-  const isHiddenRoute = /\/(exam|syllabus|circular|event)\/[a-zA-Z0-9-]+/.test(
+  const isHiddenRoute = /\/(exam|syllabus|circular|events)\/[a-zA-Z0-9-]+/.test(
     location
   )
   const [active, setActive] = useState<string>("Home")

@@ -5,7 +5,7 @@ import React from "react"
 
 const Footer = () => {
   const location = usePathname()
-  const isHiddenRoute = /\/(exam|syllabus|circular|event)\/[a-zA-Z0-9-]+/.test(
+  const isHiddenRoute = /\/(exam|syllabus|circular|events)\/[a-zA-Z0-9-]+/.test(
     location
   )
 

@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update:admin":"git checkout admin && git merge main && git push",
-    "update:main":"git checkout main && git merge admin && git push"
+    "main:admin":"git add . && git commit -m 'merge' && git push && git checkout admin && git merge main && git push",
+    "admin:main":"git add . && git commit -m 'merge' && git push && git checkout main && git merge admin && git push"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",

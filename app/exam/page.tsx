@@ -54,7 +54,7 @@ const Exam = () => {
           </select>
         </div>
 
-        <div className=" border-[1px] w-[70%] px-6 py-5 border-my-green ">
+        <div className=" border-[1px] w-[70%] px-6 py-5 border-my-green">
           <select
             onChange={(e) => setSem(e.target.value)}
             defaultValue={sem}

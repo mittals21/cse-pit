@@ -77,6 +77,19 @@ export const getData = async () => {
   }
 }
 
+export const uploadEventImage = async (file: File | null) => {
+  try {
+    if (!file) return "No Image Found"
+    const storageRef = ref(storage, `event/${Date?.now()}-${file.name}`)
+
+    const upload = await uploadBytes(storageRef, file)
+    const fileUrl = await getDownloadURL(upload.ref)
+    return fileUrl
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const allUploads = async (
   type: string,
   data: AllUploads | null,
