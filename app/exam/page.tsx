@@ -37,9 +37,9 @@ const Exam = () => {
   }, [dept, sem, pageData])
 
   return (
-    <div className="my-[100px]">
-      <div className="flex gap-2 mx-10">
-        <div className=" border-[1px] w-[30%] px-6 py-5 border-my-green ">
+    <div className="mt-[100px] mb-[140px] lg:my-[100px]">
+      <div className="flex flex-col lg:flex-row gap-2 mx-5 lg:mx-10">
+        <div className=" border-[1px] lg:w-[30%] px-6 py-5 border-my-green">
           <select
             onChange={(e) => setDept(e.target.value)}
             defaultValue={dept}
@@ -54,7 +54,7 @@ const Exam = () => {
           </select>
         </div>
 
-        <div className=" border-[1px] w-[70%] px-6 py-5 border-my-green">
+        <div className=" border-[1px] lg:w-[70%] px-6 py-5 border-my-green">
           <select
             onChange={(e) => setSem(e.target.value)}
             defaultValue={sem}

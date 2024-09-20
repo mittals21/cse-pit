@@ -40,7 +40,7 @@ const MobileNav = () => {
   }, [location])
 
   return (
-    <div className="fixed top-0 left-0 right-0 lg:hidden text-gray-900 bg-white z-[50000]">
+    <div className="fixed top-0 left-0 right-0 lg:hidden text-gray-900 bg-white z-[50000] border-b border-b-black">
       <div className="flex p-3 justify-between items-center">
         <p className="font-semibold text-lg">PIT Portal</p>
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>

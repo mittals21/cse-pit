@@ -118,12 +118,13 @@ const StudentTable = () => {
       </div>
       <div className="sticky bg-white top-0 px-2 pt-2">
         <div
-          className="grid font-medium text-2xl text-center capitalize mb-2 relative"
+          className="grid font-medium text-xl xl:text-2xl text-center capitalize mb-2 relative"
           style={{ gridTemplateColumns: "auto 1fr 1fr 1fr 1fr 1fr" }}
         >
           <p className="w-[50px]">#</p>
           <p>Name</p>
-          <p>Enrollment Number</p>
+          <p className="hidden xl:block">Enrollment Number</p>
+          <p className="xl:hidden">Er. No.</p>
           <p>Phone Number</p>
           <p>Division</p>
           <p
@@ -139,21 +140,21 @@ const StudentTable = () => {
         </div>
 
         <div
-          className="grid pb-2 font-medium text-xl text-center capitalize mb-4 border-b-my-green border-b"
+          className="grid pb-2 font-medium text-lg xl:text-xl text-center h-fit capitalize xl:mb-4 border-b-my-green border-b"
           style={{ gridTemplateColumns: "auto 1fr 1fr 1fr 1fr 1fr" }}
         >
-          <p className="w-[50px] invisible">#</p>
-          <p className="invisible">Name</p>
-          <p className="invisible">Enrollment Number</p>
-          <p className="invisible">Phone Number</p>
-          <p className="invisible">Division</p>
+          <p className="w-[50px] invisible h-fit">#</p>
+          <p className="invisible h-fit">Name</p>
+          <p className="invisible h-fit">Er. No.</p>
+          <p className="invisible h-fit">Ph No.</p>
+          <p className="invisible h-fit">Division</p>
           <div
-            className="grid border-t border-t-my-green pt-1"
+            className="grid border-t border-t-my-green pt-1 h-fit"
             style={{ gridTemplateColumns: "1fr 1fr 1fr" }}
           >
-            <p className="min-w-[100px]">Total</p>
-            <p className="min-w-[100px]">Paid</p>
-            <p className="min-w-[100px]">Pending</p>
+            <p className="min-w-[100px] h-fit">Total</p>
+            <p className="min-w-[100px] h-fit">Paid</p>
+            <p className="min-w-[100px] h-fit">Pending</p>
           </div>
         </div>
       </div>

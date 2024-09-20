@@ -31,7 +31,7 @@ const Circulars = () => {
               ?.map((e: any) => (
                 <div
                   key={e?.id}
-                  className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] sm:max-w-[500px] gap-10"
+                  className="flex flex-col md:flex-row md:items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] sm:max-w-[500px] md:gap-10"
                 >
                   <Link
                     href={`circular/${e?.id}`}
@@ -51,7 +51,7 @@ const Circulars = () => {
                       )
                     </span>
                   </Link>
-                  <p className="text-sm lg:text-base text-gray-500">
+                  <p className="text-sm text-end md:text-start lg:text-base text-gray-500">
                     {getDateString(e?.createdAt)}
                   </p>
                 </div>

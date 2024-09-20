@@ -141,7 +141,7 @@ const AllUploads = () => {
   }, [host])
 
   return (
-    <div className="px-60 my-[100px] ">
+    <div className="px-20 xl:px-60 my-[100px] ">
       <div className="flex-1">
         <div>
           <div>

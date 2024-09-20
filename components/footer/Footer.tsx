@@ -24,7 +24,7 @@ const Footer = () => {
           <p>Mittal Suthar</p>
           <div className="h-[5px] w-[5px] bg-black rounded-full"></div>
           <p>Aadarsh Jha</p>
-          <div className="h-[5px] w-[5px] bg-black rounded-full hidden lg:block"></div>
+          <div className="h-[5px] w-[5px] bg-black rounded-full"></div>
           <p>Aryan Singh</p>
           <div className="h-[5px] w-[5px] bg-black rounded-full"></div>
           <p>Aditya Vishwakarma</p>
