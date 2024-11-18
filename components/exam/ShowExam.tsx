@@ -20,11 +20,8 @@ const ShowExam = ({
       {filteredData ? (
         filteredData?.length > 0 ? (
           filteredData?.map((e, index) => (
-            <Link href={`/exam/${e?.id}`} target="_blank">
-              <div
-                key={e?.id}
-                className="grid grid-cols-3 md:grid-cols-4 lg:text-lg items-center text-center capitalize border-b border-x py-1 mx-2 md:mx-5 lg:mx-10 hover:bg-my-green/20 cursor-pointer"
-              >
+            <Link key={e?.id} href={`/exam/${e?.id}`} target="_blank">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:text-lg items-center text-center capitalize border-b border-x py-1 mx-2 md:mx-5 lg:mx-10 hover:bg-my-green/20 cursor-pointer">
                 <p>{e?.examType}</p>
                 <p>{e?.department}</p>
                 <p>{e?.semester}</p>
