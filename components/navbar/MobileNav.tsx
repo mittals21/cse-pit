@@ -3,13 +3,14 @@ import { getAllData } from "@/redux/dataSlice"
 import { MyDispatch } from "@/redux/store"
 import { NavbarRoutes } from "@/utils/type"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 import { FiMenu } from "react-icons/fi"
 import { IoClose } from "react-icons/io5"
 import { useDispatch } from "react-redux"
 
 const MobileNav = () => {
+  const router = useRouter()
   const dispatch = useDispatch<MyDispatch>()
 
   const location = usePathname()
@@ -42,7 +43,9 @@ const MobileNav = () => {
   return (
     <div className="fixed top-0 left-0 right-0 lg:hidden text-gray-900 bg-white z-[50000] border-b border-b-black">
       <div className="flex p-3 justify-between items-center">
-        <p className="font-semibold text-lg">PIT Portal</p>
+        <p className="font-semibold text-lg" onClick={() => router.push("/")}>
+          PIT Portal
+        </p>
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <IoClose size={25} /> : <FiMenu size={25} />}
         </div>
@@ -55,9 +58,9 @@ const MobileNav = () => {
         {data?.map((e: NavbarRoutes) => (
           <Link href={e?.path} key={e?.title}>
             <button
-              className={`${e?.title === active ? "underline" : ""} ${
-                e?.title === "Home" && location === "/" ? "hidden" : ""
-              }`}
+              className={`${
+                e?.title === active ? "underline text-my-green" : ""
+              } ${e?.title === "Home" && location === "/" ? "hidden" : ""}`}
               onClick={() => handleClick(e?.title)}
             >
               {e?.title}

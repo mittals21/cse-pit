@@ -12,7 +12,7 @@ const Home = () => {
         className="w-full h-full object-fill -z-10"
         alt=""
       />
-      <div className="absolute lg:right-10 bg-white/70 rounded-lg p-3 lg:p-5">
+      <div className="absolute bg-white/70 rounded-lg p-2 sm:p-5">
         <Circulars />
       </div>
     </div>

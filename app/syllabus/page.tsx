@@ -36,16 +36,15 @@ const Syllabus = () => {
   }, [dept, semester, pageData])
 
   return (
-    <div className="mt-[100px] mb-[140px] lg:my-[100px]">
-      {/* {data && data?.length > 0 && ( */}
-      <div className="flex flex-col lg:flex-row gap-2 mx-5 lg:mx-10">
-        <div className=" border-[1px] lg:w-[30%] px-6 py-5 border-my-green ">
+    <div className="my-[100px]">
+      <div className="flex gap-2 mx-2 md:mx-5 lg:mx-10">
+        <div className="border-[1px] w-1/2 md:w-[30%] p-2 lg:p-3 border-my-green">
           <select
             onChange={(e) => setDept(e.target.value)}
             defaultValue={dept}
-            className="bg-transparent cursor-pointer w-full px-3 py-2 border-[1px]  "
+            className="bg-transparent cursor-pointer w-full px-3 py-2 border-[1px]"
           >
-            <option value="default">------Select Department------</option>
+            <option value="default">---Department---</option>
             {departments?.map((d: dropdowns) => (
               <option key={d?.value} value={d?.value}>
                 {d?.name}
@@ -54,7 +53,7 @@ const Syllabus = () => {
           </select>
         </div>
 
-        <div className=" border-[1px] lg:w-[70%] px-6 py-5 border-my-green">
+        <div className=" border-[1px] w-1/2 md:w-[70%] p-2 lg:p-3 border-my-green">
           <select
             onChange={(e) => setSemester(e.target.value)}
             defaultValue={semester}
@@ -63,7 +62,7 @@ const Syllabus = () => {
             } bg-transparent w-full px-3 py-2 border-[1px]  `}
             disabled={!dept}
           >
-            <option value="default">------Select Semester------</option>
+            <option value="default">---Semester---</option>
             {semesters?.map((s: dropdowns) => (
               <option key={s?.value} value={s?.value}>
                 {s?.name}
@@ -72,7 +71,6 @@ const Syllabus = () => {
           </select>
         </div>
       </div>
-      {/* )} */}
 
       {pageData ? (
         <SyllabusRow filteredData={filteredData} />

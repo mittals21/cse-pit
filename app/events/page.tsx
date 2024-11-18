@@ -22,28 +22,19 @@ const Events = () => {
   }, [data])
 
   return (
-    <div className="mt-[100px] mb-[140px] lg:my-[100px] lg:px-14">
+    <div className="my-[100px] px-2 flex justify-center items-center">
       {pageData ? (
         pageData?.length > 0 ? (
-          <div className="flex flex-wrap justify-evenly gap-y-10 gap-x-5">
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-5 md:gap-8">
             {pageData
               ?.slice()
               ?.reverse()
               ?.map((pd) => (
                 <div
                   key={pd?.id}
-                  className="border-2 border-my-green max-w-fit p-3 rounded-md shadow-lg"
+                  className="border-2 break-inside-avoid mb-5 md:mb-8 border-my-green p-3 md:p-5 rounded-md shadow-lg"
                 >
-                  <div className="hidden xl:block">
-                    <Image
-                      className="shadow-lg object-contain rounded"
-                      height={400}
-                      width={400}
-                      src={pd?.image}
-                      alt=""
-                    />
-                  </div>
-                  <div className="hidden lg:block xl:hidden">
+                  <div className="flex justify-center items-center">
                     <Image
                       className="shadow-lg object-contain rounded"
                       height={300}
@@ -52,31 +43,13 @@ const Events = () => {
                       alt=""
                     />
                   </div>
-                  <div className="hidden md:block lg:hidden">
-                    <Image
-                      className="shadow-lg object-contain rounded"
-                      height={200}
-                      width={200}
-                      src={pd?.image}
-                      alt=""
-                    />
-                  </div>
-                  <div className="md:hidden">
-                    <Image
-                      className="shadow-lg object-contain rounded"
-                      height={250}
-                      width={250}
-                      src={pd?.image}
-                      alt=""
-                    />
-                  </div>
-                  <p className="mt-5 text-lg lg:text-2xl font-semibold text-center">
+                  <p className="mt-5 text-2xl font-semibold text-center">
                     {pd?.name}
                   </p>
-                  <div className="flex flex-col xl:flex-row items-center justify-center my-2 xl:gap-8">
+                  <div className="flex items-center justify-center my-2 gap-6 lg:gap-8">
                     <Link
                       target="_blank"
-                      className="flex gap-2"
+                      className="flex gap-1"
                       href={pd?.link}
                     >
                       <span>Visit Website</span>
@@ -84,14 +57,14 @@ const Events = () => {
                     </Link>
                     <Link
                       target="_blank"
-                      className="flex gap-2"
+                      className="flex gap-1"
                       href={`/events/${pd?.id}`}
                     >
                       <span>Read Description</span>
                       <IoOpen className="cursor-pointer" size={20} />
                     </Link>
                   </div>
-                  <div className="flex flex-col xl:flex-row items-center justify-center mb-2 xl:gap-8 text-stone-600">
+                  <div className="flex flex-col xl:flex-row items-center justify-center mb-2 gap-2 xl:gap-8 text-stone-600">
                     <p>Coordinator: {pd?.coordinator}</p>
                     <p>Uploaded On: {getDateString(pd?.updatedAt)}</p>
                   </div>

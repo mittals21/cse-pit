@@ -20,30 +20,43 @@ const Circulars = () => {
   }, [data])
 
   return (
-    <div className="flex flex-col justify-center items-center gap-3 tracking-wide">
-      <p className="text-center text-[25px] lg:text-[35px] font-bold">
+    <div className="flex flex-col justify-center items-center gap-2 lg:gap-3 tracking-wide">
+      <p className="text-center text-2xl md:text-3xl lg:text-4xl font-bold">
         Circulars
       </p>
-      <div className="border-2 border-my-green max-h-[300px] overflow-y-scroll bg-white/85 px-2 lg:px-5">
+      <div className="border-2 border-my-green max-h-[400px] overflow-y-scroll bg-white/85 px-2 md:px-5">
         {pageData ? (
           pageData?.length > 0 ? (
             pageData
               ?.map((e: any) => (
                 <div
                   key={e?.id}
-                  className="flex flex-col md:flex-row md:items-end justify-between border-b border-b-my-green last:border-none py-2 sm:min-w-[400px] sm:max-w-[500px] md:gap-10"
+                  className="flex items-end justify-between border-b border-b-my-green last:border-none py-2 min-w-[240px] md:min-w-[400px] gap-2"
                 >
                   <Link
                     href={`circular/${e?.id}`}
                     target="_blank"
-                    className="hover:underline text-lg lg:text-2xl cursor-pointer"
+                    className="hover:underline sm:text-lg md:text-xl xl:text-2xl cursor-pointer"
                   >
-                    <span title={e?.name}>
-                      {e?.name?.length > 16
-                        ? `${e?.name?.slice(0, 16)}...`
+                    {/* TITLE FOR SMALL SCREENS */}
+                    <span title={e?.name} className="block md:hidden">
+                      {e?.name?.length > 35
+                        ? `${e?.name?.slice(0, 35)}...`
                         : e?.name}
                     </span>
-                    <span className="ml-2 text-gray-600 text-base">
+                    {/* TITLE FOR MEDIUM SCREENS */}
+                    <span title={e?.name} className="hidden md:block lg:hidden">
+                      {e?.name?.length > 50
+                        ? `${e?.name?.slice(0, 50)}...`
+                        : e?.name}
+                    </span>
+                    {/* TITLE FOR LARGE SCREENS */}
+                    <span title={e?.name} className="hidden lg:block">
+                      {e?.name?.length > 70
+                        ? `${e?.name?.slice(0, 70)}...`
+                        : e?.name}
+                    </span>
+                    <span className="sm:ml-2 text-gray-600 text-sm sm:text-base">
                       (
                       {e?.for === "all"
                         ? "All Semesters"
@@ -51,7 +64,7 @@ const Circulars = () => {
                       )
                     </span>
                   </Link>
-                  <p className="text-sm text-end md:text-start lg:text-base text-gray-500">
+                  <p className="text-gray-500 hidden md:block">
                     {getDateString(e?.createdAt)}
                   </p>
                 </div>

@@ -141,92 +141,63 @@ const AllUploads = () => {
   }, [host])
 
   return (
-    <div className="px-20 xl:px-60 my-[100px] ">
-      <div className="flex-1">
-        <div>
+    <>
+      <div className="px-40 xl:px-60 my-[100px] hidden lg:block">
+        <div className="flex-1">
           <div>
-            <select
-              onChange={handleUploadTypeChange}
-              value={uploadType}
-              className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
-            >
-              <option value="">---Select Type---</option>
-              {uploadTypes?.map((ut: dropdowns) => (
-                <option key={ut?.value} value={ut?.value}>
-                  {ut?.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            {uploadType === "syllabus" && (
-              <div>
-                <select
-                  onChange={(e) => setDepartment(e.target.value)}
-                  value={department}
-                  className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
-                >
-                  <option value="">---Select Department---</option>
-                  {departments?.map((d: dropdowns) => (
-                    <option key={d?.value} value={d?.value}>
-                      {d?.name}
-                    </option>
-                  ))}
-                </select>
-                {department && (
+            <div>
+              <select
+                onChange={handleUploadTypeChange}
+                value={uploadType}
+                className="bg-transparent rounded-lg border-[2px] my-3 cursor-pointer outline-none py-2 pl-2 border-my-green"
+              >
+                <option value="">---Select Type---</option>
+                {uploadTypes?.map((ut: dropdowns) => (
+                  <option key={ut?.value} value={ut?.value}>
+                    {ut?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              {uploadType === "syllabus" && (
+                <div>
                   <select
-                    onChange={(e) => setSemester(e.target.value)}
-                    value={semester}
+                    onChange={(e) => setDepartment(e.target.value)}
+                    value={department}
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
-                    <option value="">---Select Semester---</option>
-                    {semesters?.map((s: dropdowns) => (
-                      <option key={s?.value} value={s?.value}>
-                        {s?.name}
+                    <option value="">---Select Department---</option>
+                    {departments?.map((d: dropdowns) => (
+                      <option key={d?.value} value={d?.value}>
+                        {d?.name}
                       </option>
                     ))}
                   </select>
-                )}
-              </div>
-            )}
-            <div>
-              {uploadType === "circular" && (
-                <select
-                  onChange={(e) => setSemester(e.target.value)}
-                  value={semester}
-                  className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
-                >
-                  <option value="semester">---Select Semester---</option>
-                  <option value="all">All Semesters</option>
-                  {semesters?.map((s: dropdowns) => (
-                    <option key={s?.value} value={s?.value}>
-                      {s?.name}
-                    </option>
-                  ))}
-                </select>
+                  {department && (
+                    <select
+                      onChange={(e) => setSemester(e.target.value)}
+                      value={semester}
+                      className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
+                    >
+                      <option value="">---Select Semester---</option>
+                      {semesters?.map((s: dropdowns) => (
+                        <option key={s?.value} value={s?.value}>
+                          {s?.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
               )}
-            </div>
-            {uploadType === "exam" && (
               <div>
-                <select
-                  onChange={(e) => setDepartment(e.target.value)}
-                  value={department}
-                  className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
-                >
-                  <option value="">---Select Department---</option>
-                  {departments?.map((d: dropdowns) => (
-                    <option key={d?.value} value={d?.value}>
-                      {d?.name}
-                    </option>
-                  ))}
-                </select>
-                {department && (
+                {uploadType === "circular" && (
                   <select
                     onChange={(e) => setSemester(e.target.value)}
                     value={semester}
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
-                    <option value="">---Select Semester---</option>
+                    <option value="semester">---Select Semester---</option>
                     <option value="all">All Semesters</option>
                     {semesters?.map((s: dropdowns) => (
                       <option key={s?.value} value={s?.value}>
@@ -235,152 +206,187 @@ const AllUploads = () => {
                     ))}
                   </select>
                 )}
-                {semester && (
+              </div>
+              {uploadType === "exam" && (
+                <div className="flex items-center gap-3">
                   <select
-                    onChange={(e) => setExamType(e.target.value)}
-                    value={examType}
+                    onChange={(e) => setDepartment(e.target.value)}
+                    value={department}
                     className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
                   >
-                    <option value="">---Select Exam Type---</option>
-                    {examTypes?.map((et: dropdowns) => (
-                      <option key={et?.value} value={et?.value}>
-                        {et?.name}
+                    <option value="">---Select Department---</option>
+                    {departments?.map((d: dropdowns) => (
+                      <option key={d?.value} value={d?.value}>
+                        {d?.name}
                       </option>
                     ))}
                   </select>
+                  {department && (
+                    <select
+                      onChange={(e) => setSemester(e.target.value)}
+                      value={semester}
+                      className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
+                    >
+                      <option value="">---Select Semester---</option>
+                      <option value="all">All Semesters</option>
+                      {semesters?.map((s: dropdowns) => (
+                        <option key={s?.value} value={s?.value}>
+                          {s?.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  {semester && (
+                    <select
+                      onChange={(e) => setExamType(e.target.value)}
+                      value={examType}
+                      className="bg-transparent rounded-lg border-[2px] my-2 cursor-pointer outline-none py-2 pl-2 border-my-green"
+                    >
+                      <option value="">---Select Exam Type---</option>
+                      {examTypes?.map((et: dropdowns) => (
+                        <option key={et?.value} value={et?.value}>
+                          {et?.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-5">
+              <div
+                className="rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px] w-full"
+                onClick={handleInput}
+              >
+                {file ? (
+                  <div className="text-[60px] flex justify-center items-center text-my-green">
+                    <FaCheck />
+                  </div>
+                ) : (
+                  <div className="text-[60px] flex justify-center items-center text-my-green/70">
+                    <IoMdCloudUpload />
+                  </div>
                 )}
+                <p className="text-center">
+                  {file
+                    ? file.name
+                    : uploadType === "event"
+                    ? "Upload Description"
+                    : "Upload a File"}
+                </p>
+
+                <input
+                  type="file"
+                  accept=".pdf"
+                  placeholder="Upload"
+                  className="hidden"
+                  onChange={(e) => {
+                    handleFileUpload(e.target.files)
+                  }}
+                  ref={inputRef}
+                />
               </div>
+
+              <div
+                className={`rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px] w-full ${
+                  uploadType === "event" ? "block" : "hidden"
+                }`}
+                onClick={handleEventImage}
+              >
+                {eventData?.image ? (
+                  <div className="text-[60px] flex justify-center items-center text-my-green">
+                    <FaCheck />
+                  </div>
+                ) : (
+                  <div className="text-[60px] flex justify-center items-center text-my-green/70">
+                    <IoMdCloudUpload />
+                  </div>
+                )}
+                <p className="text-center">
+                  {eventData?.image
+                    ? eventData?.image?.name
+                    : "Upload Event Image"}
+                </p>
+
+                <input
+                  type="file"
+                  accept=".jpg,.jpeg,.png,.gif,.bmp,.webp"
+                  placeholder="Upload"
+                  className="hidden"
+                  onChange={(e) => {
+                    handleEventImageUpload(e.target.files)
+                  }}
+                  ref={eventImageRef}
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="File Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-lg border-[2px] outline-none my-3 py-1.5 px-3 border-my-green"
+            />
+            {uploadType === "event" && (
+              <>
+                <input
+                  type="text"
+                  placeholder="Registration Link"
+                  value={eventData?.link}
+                  onChange={(e) =>
+                    setEventData((prev) => ({ ...prev, link: e.target.value }))
+                  }
+                  className="w-full rounded-lg border-[2px] outline-none my-3 py-1.5 px-3 border-my-green"
+                />
+                <input
+                  type="text"
+                  placeholder="Coordinator Name"
+                  value={eventData?.coordinator}
+                  onChange={(e) =>
+                    setEventData((prev) => ({
+                      ...prev,
+                      coordinator: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-lg border-[2px] outline-none my-3 py-1.5 px-3 border-my-green"
+                />
+                <input
+                  type="date"
+                  placeholder="Deadline"
+                  value={eventData?.deadline}
+                  onChange={(e) =>
+                    setEventData((prev) => ({
+                      ...prev,
+                      deadline: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-lg border-[2px] outline-none my-3 py-1.5 px-3 border-my-green"
+                />
+              </>
             )}
           </div>
-          <div className="flex items-center gap-5">
-            <div
-              className="rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px] w-full"
-              onClick={handleInput}
+          <div className="flex justify-end">
+            <button
+              onClick={upload}
+              className={`${
+                notAllowUpload()
+                  ? "bg-my-green/20 text-black cursor-not-allowed"
+                  : "bg-my-green text-white cursor-pointer"
+              } rounded-lg px-[20px] py-[8px] flex justify-center `}
+              disabled={notAllowUpload()}
             >
-              {file ? (
-                <div className="text-[60px] flex justify-center items-center text-my-green">
-                  <FaCheck />
-                </div>
-              ) : (
-                <div className="text-[60px] flex justify-center items-center text-my-green/70">
-                  <IoMdCloudUpload />
-                </div>
-              )}
-              <p className="text-center">
-                {file
-                  ? file.name
-                  : uploadType === "event"
-                  ? "Upload Description"
-                  : "Upload a File"}
-              </p>
-
-              <input
-                type="file"
-                accept=".pdf"
-                placeholder="Upload"
-                className="hidden"
-                onChange={(e) => {
-                  handleFileUpload(e.target.files)
-                }}
-                ref={inputRef}
-              />
-            </div>
-
-            <div
-              className={`rounded-md bg-blue-50 py-5 border-dashed border-my-green border-[2px] w-full ${
-                uploadType === "event" ? "block" : "hidden"
-              }`}
-              onClick={handleEventImage}
-            >
-              {eventData?.image ? (
-                <div className="text-[60px] flex justify-center items-center text-my-green">
-                  <FaCheck />
-                </div>
-              ) : (
-                <div className="text-[60px] flex justify-center items-center text-my-green/70">
-                  <IoMdCloudUpload />
-                </div>
-              )}
-              <p className="text-center">
-                {eventData?.image
-                  ? eventData?.image?.name
-                  : "Upload Event Image"}
-              </p>
-
-              <input
-                type="file"
-                accept=".jpg,.jpeg,.png,.gif,.bmp,.webp"
-                placeholder="Upload"
-                className="hidden"
-                onChange={(e) => {
-                  handleEventImageUpload(e.target.files)
-                }}
-                ref={eventImageRef}
-              />
-            </div>
+              {apiCall ? <Loader /> : "Upload"}
+            </button>
           </div>
         </div>
-        <div>
-          <input
-            type="text"
-            placeholder="File Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
-          />
-          {uploadType === "event" && (
-            <>
-              <input
-                type="text"
-                placeholder="Registration Link"
-                value={eventData?.link}
-                onChange={(e) =>
-                  setEventData((prev) => ({ ...prev, link: e.target.value }))
-                }
-                className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
-              />
-              <input
-                type="text"
-                placeholder="Coordinator Name"
-                value={eventData?.coordinator}
-                onChange={(e) =>
-                  setEventData((prev) => ({
-                    ...prev,
-                    coordinator: e.target.value,
-                  }))
-                }
-                className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
-              />
-              <input
-                type="date"
-                placeholder="Deadline"
-                value={eventData?.deadline}
-                onChange={(e) =>
-                  setEventData((prev) => ({
-                    ...prev,
-                    deadline: e.target.value,
-                  }))
-                }
-                className="w-full rounded-lg border-[2px] outline-none my-2 py-1.5 px-3 border-my-green"
-              />
-            </>
-          )}
-        </div>
-        <div className="flex justify-end">
-          <button
-            onClick={upload}
-            className={`${
-              notAllowUpload()
-                ? "bg-my-green/20 text-black cursor-not-allowed"
-                : "bg-my-green text-white cursor-pointer"
-            } rounded-lg px-[20px] py-[8px] flex justify-center `}
-            disabled={notAllowUpload()}
-          >
-            {apiCall ? <Loader /> : "Upload"}
-          </button>
-        </div>
       </div>
-    </div>
+
+      <div className="w-full h-screen flex lg:hidden justify-center items-center text-3xl font-medium text-center">
+        <p>Please open this tab on a desktop device.</p>
+      </div>
+    </>
   )
 }
 

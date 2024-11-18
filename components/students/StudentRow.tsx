@@ -41,7 +41,7 @@ const StudentRow = ({
 
   return (
     <div
-      className={`grid xl:text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2 ${
+      className={`grid text-lg items-center text-center capitalize cursor-pointer border-b py-1 mx-2 ${
         isHovered && "shadow-sm shadow-black/70"
       } ${isSelected && "bg-my-green text-white"} ${
         isHovered && !isSelected && "bg-my-green/20"
@@ -66,20 +66,21 @@ const StudentRow = ({
           )}
         </div>
       )}
-      <p>{e?.name}</p>
+      <p className="xl:hidden">{e?.name?.length > 15 ? `${e?.name?.slice(0, 15)}...` : e?.name}</p>
+      <p className="hidden xl:block">{e?.name?.length > 25 ? `${e?.name?.slice(0, 25)}...` : e?.name}</p>
       <p>{e?.enrollment}</p>
       <p>{e?.contact}</p>
       <p>{e?.division}</p>
-      <div className="grid " style={{ gridTemplateColumns: "1fr 1fr 1fr" }}>
-        <p className="flex items-center  pl-[10px] min-w-[100px]">
+      <div className="flex">
+        <p className="flex items-center pl-[10px] min-w-[100px]">
           <LiaRupeeSignSolid />
           {e?.fees[feeType]?.total || 0}
         </p>
-        <p className="flex items-center  pl-[10px] min-w-[100px]">
+        <p className="flex items-center pl-[10px] min-w-[100px]">
           <LiaRupeeSignSolid />
           {e?.fees[feeType]?.paid || 0}
         </p>
-        <p className="flex items-center  pl-[15px] min-w-[100px]">
+        <p className="flex items-center pl-[15px] min-w-[100px]">
           <LiaRupeeSignSolid />
           {e?.fees[feeType]?.pending || 0}
         </p>

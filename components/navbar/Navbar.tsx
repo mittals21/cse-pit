@@ -76,7 +76,7 @@ const Navbar = () => {
               {data?.map((e: NavbarRoutes) => (
                 <Link href={e?.path} key={e?.title}>
                   <button
-                    className={`${e?.title === active ? "underline" : ""} ${
+                    className={`${e?.title === active ? "underline text-my-green" : ""} ${
                       e?.title === "Home" && location === "/" ? "hidden" : ""
                     }`}
                     onClick={() => setActive(e?.title)}
